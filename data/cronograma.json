@@ -1,0 +1,1892 @@
+{
+ "gerado_em": "16/09/2026",
+ "prova": "06/12/2026",
+ "total_dias": 81,
+ "fases": {
+  "1": {
+   "rotulo": "FASE 1",
+   "nome": "BASE",
+   "cor": "#1e88e5"
+  },
+  "2": {
+   "rotulo": "FASE 2",
+   "nome": "COBERTURA DO EDITAL",
+   "cor": "#43a047"
+  },
+  "3": {
+   "rotulo": "FASE 3",
+   "nome": "CONSOLIDAÇÃO",
+   "cor": "#fb8c00"
+  },
+  "4": {
+   "rotulo": "FASE 4",
+   "nome": "RETA FINAL",
+   "cor": "#e53935"
+  }
+ },
+ "dias": [
+  {
+   "dia": 1,
+   "data": "16/09",
+   "dia_semana": "Quarta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Internet e web: internet, intranet, URL, IP, DNS, HTTP/HTTPS, pesquisa e fontes confiáveis."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "10 questões — corrigir"
+  },
+  {
+   "dia": 2,
+   "data": "17/09",
+   "dia_semana": "Quinta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Navegadores e e-mail: cookies, histórico, extensões, certificados, anexos, Cc/Cco, spam e phishing."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "10 questões — corrigir"
+  },
+  {
+   "dia": 3,
+   "data": "18/09",
+   "dia_semana": "Sexta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Redes sociais e novas tecnologias: rastros digitais, privacidade, autenticação em dois fatores, IA, mobilidade e IoT."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Sistemas operacionais"
+    }
+   ],
+   "entrega": "10 questões — corrigir"
+  },
+  {
+   "dia": 4,
+   "data": "19/09",
+   "dia_semana": "Sábado",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Computação em nuvem: IaaS, PaaS, SaaS, tipos de nuvem, sincronização, versões, backup e riscos."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Ortografia, hífen e acentuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "10 questões — corrigir"
+  },
+  {
+   "dia": 5,
+   "data": "20/09",
+   "dia_semana": "Domingo",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Classes e formação de palavras + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 6,
+   "data": "21/09",
+   "dia_semana": "Segunda",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Certificados e assinaturas digitais: permissões, autoridade certificadora, chaves, validade, revogação e assinaturas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Termos da oração e períodos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "10 questões — corrigir"
+  },
+  {
+   "dia": 7,
+   "data": "22/09",
+   "dia_semana": "Terça",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Windows 11: arquivos, pastas, atalhos, usuários, UAC, atualizações, restauração e diagnóstico."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "10 questões — corrigir"
+  },
+  {
+   "dia": 8,
+   "data": "23/09",
+   "dia_semana": "Quarta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes sociais e novas tecnologias: rastros digitais, privacidade, 2FA, IA, mobilidade e IoT."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 9,
+   "data": "24/09",
+   "dia_semana": "Quinta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar computação em nuvem: IaaS, PaaS, SaaS, tipos de nuvem, sincronização, versões, backup e riscos."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Sistemas operacionais"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 10,
+   "data": "25/09",
+   "dia_semana": "Sexta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar segurança da informação: CID, autenticação, autorização, menor privilégio, malware, firewall, antivírus e logs."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Ortografia, hífen e acentuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 11,
+   "data": "26/09",
+   "dia_semana": "Sábado",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar certificados e assinaturas digitais: permissões, autoridade certificadora, chaves, validade, revogação e assinaturas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Classes e formação de palavras + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 12,
+   "data": "27/09",
+   "dia_semana": "Domingo",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Termos da oração e períodos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 13,
+   "data": "28/09",
+   "dia_semana": "Segunda",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Word 365: edição, formatação, estilos, tabelas, imagens, seções, revisão, impressão e PDF."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 14,
+   "data": "29/09",
+   "dia_semana": "Terça",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar PowerPoint 365: slides, layouts, objetos, temas, transições, animações, notas e PPS/PPSX."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 15,
+   "data": "30/09",
+   "dia_semana": "Quarta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar segurança da informação: CID, autenticação, autorização, menor privilégio, malware, firewall, antivírus e logs."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Sistemas operacionais"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 16,
+   "data": "01/10",
+   "dia_semana": "Quinta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar certificados e assinaturas digitais: permissões, autoridade certificadora, chaves, validade, revogação e assinaturas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Ortografia, hífen e acentuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 17,
+   "data": "02/10",
+   "dia_semana": "Sexta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Windows 11: arquivos, pastas, atalhos, usuários, UAC, atualizações, restauração e diagnóstico."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Classes e formação de palavras + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 18,
+   "data": "03/10",
+   "dia_semana": "Sábado",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Word 365: edição, formatação, estilos, tabelas, imagens, seções, revisão, impressão e PDF."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Termos da oração e períodos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 19,
+   "data": "04/10",
+   "dia_semana": "Domingo",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 20,
+   "data": "05/10",
+   "dia_semana": "Segunda",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes, servidores e suporte: LAN/WAN/WLAN, IPv4, máscara, DNS, DHCP, ping, ipconfig, tracert e nslookup."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 21,
+   "data": "06/10",
+   "dia_semana": "Terça",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar backup e inventário: completo, incremental, diferencial, regra 3-2-1, RPO/RTO, restauração e inventário."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 22,
+   "data": "07/10",
+   "dia_semana": "Quarta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Windows 11: arquivos, pastas, atalhos, usuários, UAC, atualizações, restauração e diagnóstico."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Ortografia, hífen e acentuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 23,
+   "data": "08/10",
+   "dia_semana": "Quinta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Word 365: edição, formatação, estilos, tabelas, imagens, seções, revisão, impressão e PDF."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Classes e formação de palavras + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 24,
+   "data": "09/10",
+   "dia_semana": "Sexta",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar PowerPoint 365: slides, layouts, objetos, temas, transições, animações, notas e PPS/PPSX."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Termos da oração e períodos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 25,
+   "data": "10/10",
+   "dia_semana": "Sábado",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes, servidores e suporte: LAN/WAN/WLAN, IPv4, máscara, DNS, DHCP, ping, ipconfig, tracert e nslookup."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 26,
+   "data": "11/10",
+   "dia_semana": "Domingo",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 27,
+   "data": "12/10",
+   "dia_semana": "Segunda",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar internet e web: internet, intranet, URL, IP, DNS, HTTP/HTTPS, pesquisa e fontes confiáveis."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 28,
+   "data": "13/10",
+   "dia_semana": "Terça",
+   "fase_id": "1",
+   "fase_nome": "BASE",
+   "fase_rotulo": "FASE 1",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar navegadores e e-mail: cookies, histórico, extensões, certificados, anexos, Cc/Cco, spam e phishing."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 29,
+   "data": "14/10",
+   "dia_semana": "Quarta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar PowerPoint 365: slides, layouts, objetos, temas, transições, animações, notas e PPS/PPSX."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Classes e formação de palavras + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 30,
+   "data": "15/10",
+   "dia_semana": "Quinta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes, servidores e suporte: LAN/WAN/WLAN, IPv4, máscara, DNS, DHCP, ping, ipconfig, tracert e nslookup."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Termos da oração e períodos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 31,
+   "data": "16/10",
+   "dia_semana": "Sexta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar backup e inventário: completo, incremental, diferencial, regra 3-2-1, RPO/RTO, restauração e inventário."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 32,
+   "data": "17/10",
+   "dia_semana": "Sábado",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar internet e web: internet, intranet, URL, IP, DNS, HTTP/HTTPS, pesquisa e fontes confiáveis."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 33,
+   "data": "18/10",
+   "dia_semana": "Domingo",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 34,
+   "data": "19/10",
+   "dia_semana": "Segunda",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes sociais e novas tecnologias: rastros digitais, privacidade, 2FA, IA, mobilidade e IoT."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 35,
+   "data": "20/10",
+   "dia_semana": "Terça",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar computação em nuvem: IaaS, PaaS, SaaS, tipos de nuvem, sincronização, versões, backup e riscos."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 36,
+   "data": "21/10",
+   "dia_semana": "Quarta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar backup e inventário: completo, incremental, diferencial, regra 3-2-1, RPO/RTO, restauração e inventário."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Termos da oração e períodos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 37,
+   "data": "22/10",
+   "dia_semana": "Quinta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar internet e web: internet, intranet, URL, IP, DNS, HTTP/HTTPS, pesquisa e fontes confiáveis."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 38,
+   "data": "23/10",
+   "dia_semana": "Sexta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar navegadores e e-mail: cookies, histórico, extensões, certificados, anexos, Cc/Cco, spam e phishing."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 39,
+   "data": "24/10",
+   "dia_semana": "Sábado",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes sociais e novas tecnologias: rastros digitais, privacidade, 2FA, IA, mobilidade e IoT."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 40,
+   "data": "25/10",
+   "dia_semana": "Domingo",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 41,
+   "data": "26/10",
+   "dia_semana": "Segunda",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar segurança da informação: CID, autenticação, autorização, menor privilégio, malware, firewall, antivírus e logs."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 42,
+   "data": "27/10",
+   "dia_semana": "Terça",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar certificados e assinaturas digitais: permissões, autoridade certificadora, chaves, validade, revogação e assinaturas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 43,
+   "data": "28/10",
+   "dia_semana": "Quarta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar navegadores e e-mail: cookies, histórico, extensões, certificados, anexos, Cc/Cco, spam e phishing."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coordenação e subordinação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Razão, proporção e porcentagem | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 44,
+   "data": "29/10",
+   "dia_semana": "Quinta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar redes sociais e novas tecnologias: rastros digitais, privacidade, 2FA, IA, mobilidade e IoT."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 45,
+   "data": "30/10",
+   "dia_semana": "Sexta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar computação em nuvem: IaaS, PaaS, SaaS, tipos de nuvem, sincronização, versões, backup e riscos."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 46,
+   "data": "31/10",
+   "dia_semana": "Sábado",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar segurança da informação: CID, autenticação, autorização, menor privilégio, malware, firewall, antivírus e logs."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 47,
+   "data": "01/11",
+   "dia_semana": "Domingo",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão semanal dos específicos + questões mistas."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "25 questões — revisar erros"
+  },
+  {
+   "dia": 48,
+   "data": "02/11",
+   "dia_semana": "Segunda",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Windows 11: arquivos, pastas, atalhos, usuários, UAC, atualizações, restauração e diagnóstico."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 49,
+   "data": "03/11",
+   "dia_semana": "Terça",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisar Word 365: edição, formatação, estilos, tabelas, imagens, seções, revisão, impressão e PDF."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | Sistemas operacionais"
+    }
+   ],
+   "entrega": "15 questões — revisar 7 dias"
+  },
+  {
+   "dia": 50,
+   "data": "04/11",
+   "dia_semana": "Quarta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: computação em nuvem."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Concordância verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Acréscimo, desconto e lucro | E-mail e anexos"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 51,
+   "data": "05/11",
+   "dia_semana": "Quinta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: segurança da informação."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 52,
+   "data": "06/11",
+   "dia_semana": "Sexta",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: certificados e assinaturas digitais."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 53,
+   "data": "07/11",
+   "dia_semana": "Sábado",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: Windows 11."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 54,
+   "data": "08/11",
+   "dia_semana": "Domingo",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "SIMULADO COMPLETO — 50 questões, até 4h, correção por disciplina."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "Simulado — anotar percentuais"
+  },
+  {
+   "dia": 55,
+   "data": "09/11",
+   "dia_semana": "Segunda",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: PowerPoint 365."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | Sistemas operacionais"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 56,
+   "data": "10/11",
+   "dia_semana": "Terça",
+   "fase_id": "2",
+   "fase_nome": "COBERTURA DO EDITAL",
+   "fase_rotulo": "FASE 2",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: redes, servidores e suporte."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 57,
+   "data": "11/11",
+   "dia_semana": "Quarta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: certificados e assinaturas digitais."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Regência verbal e nominal + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Sequências e padrões | Segurança, phishing e backup"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 58,
+   "data": "12/11",
+   "dia_semana": "Quinta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: Windows 11."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 59,
+   "data": "13/11",
+   "dia_semana": "Sexta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: Word 365."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 60,
+   "data": "14/11",
+   "dia_semana": "Sábado",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: PowerPoint 365."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 61,
+   "data": "15/11",
+   "dia_semana": "Domingo",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "SIMULADO COMPLETO — 50 questões, até 4h, correção por disciplina."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | Sistemas operacionais"
+    }
+   ],
+   "entrega": "Simulado — anotar percentuais"
+  },
+  {
+   "dia": 62,
+   "data": "16/11",
+   "dia_semana": "Segunda",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: backup e inventário."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 63,
+   "data": "17/11",
+   "dia_semana": "Terça",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: internet e web."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 64,
+   "data": "18/11",
+   "dia_semana": "Quarta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: Word 365."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Crase e pontuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Combinatória e probabilidade | Nuvem e permissões"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 65,
+   "data": "19/11",
+   "dia_semana": "Quinta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: PowerPoint 365."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 66,
+   "data": "20/11",
+   "dia_semana": "Sexta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: redes, servidores e suporte."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 67,
+   "data": "21/11",
+   "dia_semana": "Sábado",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: backup e inventário."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | Sistemas operacionais"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 68,
+   "data": "22/11",
+   "dia_semana": "Domingo",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "SIMULADO COMPLETO — 50 questões, até 4h, correção por disciplina."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "Simulado — anotar percentuais"
+  },
+  {
+   "dia": 69,
+   "data": "23/11",
+   "dia_semana": "Segunda",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: navegadores e e-mail."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 70,
+   "data": "24/11",
+   "dia_semana": "Terça",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão ativa: redes sociais e novas tecnologias."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Ortografia, hífen e acentuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "20 questões — caderno de erros"
+  },
+  {
+   "dia": 71,
+   "data": "25/11",
+   "dia_semana": "Quarta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: redes, servidores e suporte."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Colocação pronominal e sentido + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabelas, gráficos e problemas | Hardware, CPU, RAM e periféricos"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 72,
+   "data": "26/11",
+   "dia_semana": "Quinta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: backup e inventário."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 73,
+   "data": "27/11",
+   "dia_semana": "Sexta",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: internet e web."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | Sistemas operacionais"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 74,
+   "data": "28/11",
+   "dia_semana": "Sábado",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: navegadores e e-mail."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 75,
+   "data": "29/11",
+   "dia_semana": "Domingo",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "SIMULADO COMPLETO — 50 questões, até 4h, correção por disciplina."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "Simulado — anotar percentuais"
+  },
+  {
+   "dia": 76,
+   "data": "30/11",
+   "dia_semana": "Segunda",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: computação em nuvem."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Ortografia, hífen e acentuação + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Conjuntos e operações | PowerPoint: temas e apresentação"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 77,
+   "data": "01/12",
+   "dia_semana": "Terça",
+   "fase_id": "3",
+   "fase_nome": "CONSOLIDAÇÃO",
+   "fase_rotulo": "FASE 3",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: segurança da informação."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Classes e formação de palavras + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Diagramas de Venn | Navegador, cache e certificados"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 78,
+   "data": "02/12",
+   "dia_semana": "Quarta",
+   "fase_id": "4",
+   "fase_nome": "RETA FINAL",
+   "fase_rotulo": "FASE 4",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: internet e web."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Variação linguística e reescrita + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Proposições, negação e argumentos | HDD, SSD e armazenamento externo"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 79,
+   "data": "03/12",
+   "dia_semana": "Quinta",
+   "fase_id": "4",
+   "fase_nome": "RETA FINAL",
+   "fase_rotulo": "FASE 4",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: navegadores e e-mail."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Interpretação: tema, finalidade, tese e implícitos + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tabela-verdade e conectivos | Sistemas operacionais"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 80,
+   "data": "04/12",
+   "dia_semana": "Sexta",
+   "fase_id": "4",
+   "fase_nome": "RETA FINAL",
+   "fase_rotulo": "FASE 4",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "Revisão final: redes sociais e novas tecnologias."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Coesão, coerência e progressão textual + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Tautologia, contradição e equivalências | Windows 11 e configurações"
+    }
+   ],
+   "entrega": "10 questões — revisar erros"
+  },
+  {
+   "dia": 81,
+   "data": "05/12",
+   "dia_semana": "Sábado",
+   "fase_id": "4",
+   "fase_nome": "RETA FINAL",
+   "fase_rotulo": "FASE 4",
+   "secoes": [
+    {
+     "titulo": "CONHECIMENTOS ESPECÍFICOS",
+     "conteudo": "REVISÃO LEVE: segurança, Windows, Word, backup e erros recorrentes. NÃO comece assunto novo."
+    },
+    {
+     "titulo": "LÍNGUA PORTUGUESA",
+     "conteudo": "Tipologia e gêneros textuais + questões"
+    },
+    {
+     "titulo": "RACIOCÍNIO LÓGICO + INFORMÁTICA",
+     "conteudo": "Leis de De Morgan | Word: edição e tabelas"
+    }
+   ],
+   "entrega": "Separar documentos e descansar"
+  }
+ ]
+}
