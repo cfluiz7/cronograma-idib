@@ -44,6 +44,22 @@ Leva cerca de 15 minutos. Siga os passos abaixo.
 3. Clique em **Publish**.
    - Isso garante que **só quem tem conta Google** pode ler/gravar o próprio progresso.
 
+## Passo 4.5 — Autorizar o domínio do site (obrigatório)
+
+O app usa **"Entrar com Google"**. Por segurança, o Google só aceita o login em domínios
+autorizados. O site está publicado em **Vercel** (`cronograma-idib.vercel.app`); este
+domínio precisa estar na lista antes de fazer login no celular:
+
+1. No menu lateral (ou no `⚙` no topo), vá em **Authentication → Settings**.
+2. Procure a lista **Authorized domains**.
+3. Se `cronograma-idib.vercel.app` **não** estiver na lista, clique em **Add domain** e
+   digite `cronograma-idib.vercel.app`.
+4. O domínio `cronograma-idib.firebaseapp.com` já vem ativo; **mantenha-o** (é usado pelas
+   chamadas internas do Firebase).
+
+> **Atenção:** sem esse passo, ao clicar em "Entrar com Google" o Google recusa com o erro
+> `auth/unauthorized-domain` (ou a janela fechada em branco). Leva 10 minutos para propagar.
+
 ## Passo 5 — Pegar os dados do projeto
 
 1. Vá em **Project settings** (ícone `⚙` no topo) → aba **General**.

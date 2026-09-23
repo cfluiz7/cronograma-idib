@@ -5,13 +5,24 @@
 let data = null;
 let DIAS = [];
 let FASES = {};
+let QUESTOES = [];
+let SIMULADOS = [];
+let ASSUNTOS = {};
+let QUESTOES_ATIVAS = []; // cache do banco (sem anuladas)
 
 async function carregarDados() {
-  const r = await fetch('./data/cronograma.json', { cache: 'no-store' });
-  if (!r.ok) throw new Error('Falha ao carregar cronograma.json');
-  data = await r.json();
+  const fetchJ = async (p) => {
+    const r = await fetch(p, { cache: 'no-store' });
+    if (!r.ok) throw new Error('Falha ao carregar ' + p);
+    return r.json();
+  };
+  data = await fetchJ('./data/cronograma.json');
   DIAS = data.dias;
   FASES = data.fases;
+  QUESTOES = await fetchJ('./data/questoes.json');
+  SIMULADOS = await fetchJ('./data/simulados/simulados.json');
+  ASSUNTOS = await fetchJ('./data/assuntos.json');
+  QUESTOES_ATIVAS = QUESTOES.filter(q => q.gabarito && q.gabarito !== '*');
   return data;
 }
 
@@ -22,6 +33,9 @@ let db = null, auth = null;
 let localOnly = false;
 let modoLeitura = false;
 let currentFilters = { q: '' };
+let estudo = { historico: {} };   // histórico de questões respondidas
+let estudoTemp = {};              // estado de uma sessão em andamento (não comitada)
+let uid = null;                   // identificador local (uid ou fake)
 
 /* ---------------- Firebase init ---------------- */
 function initFirebase() {
@@ -41,15 +55,24 @@ function initFirebase() {
 /* ---------------- Persistência local ---------------- */
 function loadLocal() {
   try { progresso = JSON.parse(localStorage.getItem('cronograma_progresso') || '{}').dias || {}; } catch { progresso = {}; }
+  try {
+    estudo = JSON.parse(localStorage.getItem('cronograma_estudo') || '{}');
+    if (!estudo.historico) estudo = { historico: {} };
+  } catch { estudo = { historico: {} }; }
+  try { estudoTemp = JSON.parse(localStorage.getItem('cronograma_estudo_temp') || '{}'); } catch { estudoTemp = {}; }
 }
 function saveLocal() {
   try { localStorage.setItem('cronograma_progresso', JSON.stringify({ dias: progresso })); } catch {}
+  try { localStorage.setItem('cronograma_estudo', JSON.stringify(estudo)); } catch {}
+  try { localStorage.setItem('cronograma_estudo_temp', JSON.stringify(estudoTemp)); } catch {}
 }
 
 const diaRef = () => db && user && db.collection('usuarios').doc(user.uid).collection('progresso').doc('dias');
+const estudoRef = () => db && user && db.collection('usuarios').doc(user.uid).collection('progresso').doc('estudo');
 
 /* ---------------- Fluxo de login ---------------- */
 async function onLogin() {
+  uid = (user && user.uid) || localStorage.getItem('cronograma_usuario') || 'local';
   renderAll();
   showApp();
 }
@@ -58,22 +81,31 @@ async function onLogout() {
     await auth.signOut();
     user = null;
     progresso = {};
+    estudo = { historico: {} };
     showLogin();
   } else {
     localStorage.removeItem('cronograma_usuario');
     user = null;
     progresso = {};
+    estudo = { historico: {} };
     showLogin();
   }
 }
 
 function showLogin() {
+  document.getElementById('view-loading').classList.add('hidden');
   document.getElementById('view-login').classList.remove('hidden');
   document.getElementById('view-app').classList.add('hidden');
 }
 function showApp() {
+  document.getElementById('view-loading').classList.add('hidden');
   document.getElementById('view-login').classList.add('hidden');
   document.getElementById('view-app').classList.remove('hidden');
+}
+function showSplash() {
+  document.getElementById('view-loading').classList.remove('hidden');
+  document.getElementById('view-login').classList.add('hidden');
+  document.getElementById('view-app').classList.add('hidden');
 }
 
 /* ---------------- Data/hora ---------------- */
@@ -148,7 +180,12 @@ async function carregarProgressoRemoto() {
     const snap = await diaRef().get();
     if (snap.exists) {
       const d = snap.data().dias || {};
-      progresso = d;
+      progresso = mergeProgresso(progresso, d);
+    }
+    const snap2 = await estudoRef().get();
+    if (snap2.exists) {
+      const e = snap2.data();
+      estudo = { historico: mergeHistorico(estudo.historico, e.historico || {}) };
     }
   } catch (e) { console.warn('Falha ao ler do Firestore:', e.message); }
 }
@@ -165,6 +202,7 @@ async function syncFirestore() {
   if (!usarFirestore() || modoLeitura) return;
   try {
     await diaRef().set({ dias: progresso }, { merge: true });
+    await estudoRef().set({ historico: estudo.historico }, { merge: true });
   } catch (e) { console.warn('Falha ao salvar no Firestore:', e.message); }
 }
 function iniciarEscuta() {
@@ -172,16 +210,50 @@ function iniciarEscuta() {
   diaRef().onSnapshot(snap => {
     if (snap.exists) {
       modoLeitura = true;
-      progresso = snap.data().dias || {};
+      progresso = mergeProgresso(progresso, snap.data().dias || {});
       saveLocal();
       renderAll();
       modoLeitura = false;
     }
   }, err => console.warn('Escuta Firestore falhou:', err.message));
+  estudoRef().onSnapshot(snap => {
+    if (snap.exists) {
+      modoLeitura = true;
+      estudo = { historico: mergeHistorico(estudo.historico, snap.data().historico || {}) };
+      saveLocal();
+      renderAll();
+      modoLeitura = false;
+    }
+  }, err => console.warn('Escuta estudo falhou:', err.message));
+}
+/* merge por dia (última escrita vence só no campo conflitante). Simple: campos por dia
+   do vindo de fora só sobrescrevem se o local não tiver valor mais novo (updatedAt). */
+function mergeProgresso(local, remoto) {
+  const out = JSON.parse(JSON.stringify(local || {}));
+  for (const d of Object.keys(remoto || {})) {
+    const a = out[d], b = remoto[d];
+    if (!b) continue;
+    if (!a) { out[d] = b; continue; }
+    const tA = a.updatedAt || 0, tB = b.updatedAt || 0;
+    out[d] = tB > tA ? b : a;
+  }
+  return out;
+}
+function mergeHistorico(local, remoto) {
+  const out = JSON.parse(JSON.stringify(local || {}));
+  for (const id of Object.keys(remoto || {})) {
+    const a = out[id], b = remoto[id];
+    if (!b) continue;
+    if (!a) { out[id] = b; continue; }
+    out[id] = (b.updatedAt || 0) > (a.updatedAt || 0) ? b : a;
+  }
+  return out;
 }
 
 /* ---------------- Render ---------------- */
 const $ = id => document.getElementById(id);
+const show = id => $(id).classList.remove('hidden');
+const hide = id => $(id).classList.add('hidden');
 
 function esc(t) {
   const d = document.createElement('div');
@@ -272,6 +344,92 @@ function renderHoje() {
       </div>
     </div>`;
   setConteudo('hoje-card', html);
+  renderPomodoro();
+}
+
+/* ---------------- Pomodoro ---------------- */
+let pomodoro = null;
+let pomoTimer = null;
+const POMO_DURACAO = 25;
+function pomoRestante() {
+  if (!pomodoro) return POMO_DURACAO * 60;
+  if (pomodoro.fim && !pomodoro.pausado) return Math.max(0, Math.round((pomodoro.fim - Date.now()) / 1000));
+  return pomodoro.pausadoEmSegundos != null ? pomodoro.pausadoEmSegundos : POMO_DURACAO * 60;
+}
+function pomoEstado() {
+  if (!pomodoro) return 'parado';
+  if (pomodoro.pausado) return 'pausado';
+  return 'rodando';
+}
+function pomoAlvoHoje() {
+  const chave = 'cronograma_pomodoro';
+  const hoje = new Date().toISOString().slice(0, 10);
+  try {
+    const obj = JSON.parse(localStorage.getItem(chave) || '{}');
+    return (obj[hoje] || 0) + 1;
+  } catch { return 0; }
+}
+function renderPomodoro(pausadoAlterado = false) {
+  if (!$('pomodoro')) return;
+  const rest = pomoRestante();
+  const mm = String(Math.floor(rest / 60)).padStart(2, '0');
+  const ss = String(rest % 60).padStart(2, '0');
+  const st = pomoEstado();
+  const hoje = new Date().toISOString().slice(0, 10);
+  let feitosHoje = 0;
+  try { feitosHoje = JSON.parse(localStorage.getItem('cronograma_pomodoro') || '{}')[hoje] || 0; } catch {}
+  const btn = st === 'parado' ? '<button class="btn-primario full" id="btn-pomo-iniciar">▶ Iniciar foco (25 min)</button>'
+    : st === 'rodando' ? '<button class="btn-primario full" id="btn-pomo-pausar">⏸ Pausar</button>'
+    : '<button class="btn-primario full" id="btn-pomo-retomar">▶ Retomar</button>';
+  const html = `
+    <div class="pomo">
+      <div class="pomo-titulo">Foco (pomodoro)</div>
+      <div class="pomo-tempo ${st === 'rodando' ? 'ativo' : st === 'pausado' ? 'pausado' : ''}">${mm}:${ss}</div>
+      <div class="pomo-sub">${st === 'rodando' ? 'focando…' : st === 'pausado' ? 'pausado' : 'pronto para começar'}</div>
+      ${btn}
+      ${st !== 'parado' ? '<button class="btn-sec" id="btn-pomo-parar">■ Encerrar hora</button>' : ''}
+      <div class="pomo-done">Sessões de 25 min hoje: <b>${feitosHoje}</b></div>
+    </div>`;
+  setConteudo('pomodoro', html);
+}
+function iniciarPomodoro() {
+  pomodoro = { inicio: Date.now(), fim: Date.now() + POMO_DURACAO * 60000, pausado: false, restante: null };
+  if (pomoTimer) clearInterval(pomoTimer);
+  pomoTimer = setInterval(() => {
+    if (!pomodoro || pomodoro.pausado) return;
+    if (Date.now() >= pomodoro.fim) { concluirPomodoro(); return; }
+    renderPomodoro();
+  }, 1000);
+  renderPomodoro();
+}
+function pausarPomodoro() {
+  if (!pomodoro || pomodoro.pausado) return;
+  pomodoro.pausado = true;
+  pomodoro.pausadoEmSegundos = Math.max(0, Math.round((pomodoro.fim - Date.now()) / 1000));
+  renderPomodoro();
+}
+function retomarPomodoro() {
+  if (!pomodoro || !pomodoro.pausado) return;
+  pomodoro.fim = Date.now() + pomodoro.pausadoEmSegundos * 1000;
+  pomodoro.pausado = false;
+  renderPomodoro();
+}
+function encerrarPomodoro(concluido) {
+  if (pomoTimer) { clearInterval(pomoTimer); pomoTimer = null; }
+  if (concluido) {
+    const chave = 'cronograma_pomodoro';
+    const hoje = new Date().toISOString().slice(0, 10);
+    try {
+      const obj = JSON.parse(localStorage.getItem(chave) || '{}');
+      obj[hoje] = (obj[hoje] || 0) + 1;
+      localStorage.setItem(chave, JSON.stringify(obj));
+    } catch {}
+  }
+  pomodoro = null;
+  renderPomodoro();
+}
+function concluirPomodoro() {
+  encerrarPomodoro(true);
 }
 
 function renderFases() {
@@ -415,6 +573,132 @@ function bindEvents() {
     renderListaDias();
   });
 
+  // ---- Filtros de questões (delegação) ----
+  document.addEventListener('change', e => {
+    const f = e.target.closest('[data-filtro]');
+    if (f) {
+      filtroQuestoes[f.dataset.filtro] = f.value;
+      if (f.dataset.filtro === 'grupo') filtroQuestoes.assunto = 'todos';
+      renderQuestoesHome();
+      atualizarContagem();
+    }
+  });
+
+  document.addEventListener('click', e => {
+    // Iniciar sessão de questões
+    if (e.target.closest('#btn-iniciar-sessao')) { ativarSessaoPelaLista(); return; }
+    // Seleção de alternativa (questões)
+    const alt = e.target.closest('[data-alt]');
+    if (alt && sessaoQuestoes) {
+      const qid = sessaoQuestoes.ids[sessaoQuestoes.idx];
+      if (sessaoQuestoes.respondidas[qid]) return; // já respondida
+      const l = alt.dataset.alt;
+      const certa = l === QUESTOES.find(q => q.id === qid).gabarito;
+      sessaoQuestoes.respondidas[qid] = { alt: l, certa };
+      if (certa) sessaoQuestoes.certas++; else sessaoQuestoes.erradas++;
+      // registra no histórico (uma tentativa por questão na sessão)
+      registrarResp(qid, certa);
+      renderQuestaoSessao();
+      return;
+    }
+    // Navegação entre questões da sessão
+    if (e.target.closest('#btn-q-prox')) { sessaoQuestoes.idx++; renderQuestaoSessao(); return; }
+    if (e.target.closest('#btn-q-ant')) { sessaoQuestoes.idx--; renderQuestaoSessao(); return; }
+    if (e.target.closest('#btn-q-fim')) {
+      const totais = { certas: sessaoQuestoes.certas, erradas: sessaoQuestoes.erradas };
+      sessaoQuestoes = null;
+      hide('questoes-sessao'); show('questoes-home');
+      renderQuestoesHome();
+      renderAnalise(); renderHojeFoco();
+      alert(`Sessão concluída: ${totais.certas} certas · ${totais.erradas} erradas. Acesse o caderno de erros na aba Análise.`);
+      return;
+    }
+    // Seleção de alternativa (simulado)
+    if (alt && sessaoSimulado) {
+      const qid = sessaoSimulado.ids[sessaoSimulado.idx];
+      sessaoSimulado.respostas[qid] = alt.dataset.alt;
+      renderSimuladoSessao();
+      return;
+    }
+    // Iniciar simulado
+    if (e.target.closest('[data-sim]')) {
+      const i = Number(e.target.closest('[data-sim]').dataset.sim);
+      hide('simulados-home'); show('simulado-sessao');
+      iniciarSimuladoComTimer(i);
+      return;
+    }
+    // Navegação simulado
+    if (e.target.closest('#btn-sim-prox')) { sessaoSimulado.idx++; renderSimuladoSessao(); return; }
+    if (e.target.closest('#btn-sim-ant')) { sessaoSimulado.idx--; renderSimuladoSessao(); return; }
+    if (e.target.closest('.sim-nav[data-nav]')) {
+      sessaoSimulado.idx = Number(e.target.closest('.sim-nav[data-nav]').dataset.nav);
+      renderSimuladoSessao();
+      return;
+    }
+    if (e.target.closest('#btn-sim-fim')) { finalizarSimulado(); return; }
+    if (e.target.closest('#btn-sim-repetir')) {
+      if (!sessaoSimulado) return;
+      iniciarSimuladoComTimer(sessaoSimulado.simuladoIndex, true);
+      return;
+    }
+    if (e.target.closest('#btn-sim-voltar')) {
+      if (timerSimulado) { clearInterval(timerSimulado); timerSimulado = null; }
+      sessaoSimulado = null;
+      hide('simulado-sessao'); show('simulados-home');
+      renderSimuladosHome();
+      return;
+    }
+    // Para buscar conteúdo no YouTube (URL de busca oficial, sem links inventados)
+    if (e.target.closest('[data-yts]')) {
+      const q = e.target.closest('[data-yts]').dataset.yts;
+      window.open('https://www.youtube.com/results?search_query=' + q, '_blank', 'noopener');
+      return;
+    }
+    // Pomodoro
+    if (e.target.closest('#btn-pomo-iniciar')) { iniciarPomodoro(); return; }
+    if (e.target.closest('#btn-pomo-pausar')) { pausarPomodoro(); return; }
+    if (e.target.closest('#btn-pomo-retomar')) { retomarPomodoro(); return; }
+    if (e.target.closest('#btn-pomo-parar')) { encerrarPomodoro(false); return; }
+    // Foco de hoje
+    if (e.target.closest('#btn-foco-revisao')) {
+      filtroQuestoes.estudo = 'revisao';
+      const dev = revisoesDevidas();
+      if (dev.length) {
+        sessaoQuestoes = { ids: dev.slice(0, 10), idx: 0, respondidas: {}, certas: 0, erradas: 0 };
+        $('barra-tabs').querySelector('[data-tab=questoes]').click();
+        hide('questoes-home'); show('questoes-sessao');
+        renderQuestaoSessao();
+      }
+      return;
+    }
+    if (e.target.closest('#btn-foco-questoes')) {
+      const diaAlvo = diaHojeAlvo();
+      if (diaAlvo) {
+        const qs = QUESTOES_ATIVAS.slice(0, 10);
+        sessaoQuestoes = { ids: qs.map(q => q.id), idx: 0, respondidas: {}, certas: 0, erradas: 0 };
+        $('barra-tabs').querySelector('[data-tab=questoes]').click();
+        hide('questoes-home'); show('questoes-sessao');
+        renderQuestaoSessao();
+      }
+      return;
+    }
+    // Treinar erros (análise)
+    if (e.target.closest('#btn-treinar-erros')) {
+      const erros = QUESTOES_ATIVAS.filter(q => {
+        const r = registro(q.id);
+        return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
+      }).slice(0, 25);
+      if (erros.length) {
+        filtroQuestoes.estudo = 'erros';
+        sessaoQuestoes = { ids: erros.map(q => q.id), idx: 0, respondidas: {}, certas: 0, erradas: 0 };
+        $('barra-tabs').querySelector('[data-tab=questoes]').click();
+        hide('questoes-home'); show('questoes-sessao');
+        renderQuestaoSessao();
+      }
+      return;
+    }
+  });
+
   // Clique nos cards/chips
   document.addEventListener('click', e => {
     const btnDia = e.target.closest('[data-dia]');
@@ -434,6 +718,7 @@ function bindEvents() {
     if (e.target.dataset.entrega !== undefined) { p.entrega = e.target.checked; }
     if (e.target.dataset.acertos !== undefined) { p.acertos = e.target.value; }
     if (e.target.dataset.erros !== undefined) { p.erros = e.target.value; }
+    p.updatedAt = Date.now();
     agendarSync();
     // atualiza o modal visual sem fechar
     const d = DIAS.find(x => x.dia === modalDia);
@@ -445,7 +730,436 @@ function bindEvents() {
     if (e.target.dataset.anotacao !== undefined) { p.anotacao = e.target.value; agendarSync(false); }
     if (e.target.dataset.acertos !== undefined) { p.acertos = e.target.value; agendarSync(false); }
     if (e.target.dataset.erros !== undefined) { p.erros = e.target.value; agendarSync(false); }
+    p.updatedAt = Date.now();
   });
+}
+
+/* ---------------- Questões: estado e dados  ---------------- */
+const gruposRotulo = {
+  lingua_portuguesa: 'Língua Portuguesa',
+  rac_logico: 'Raciocínio Lógico',
+  informatica: 'Informática / Específicos'
+};
+const qByGrupo = () => {
+  const out = {};
+  QUESTOES_ATIVAS.forEach(q => {
+    out[q.grupo] = out[q.grupo] || [];
+    out[q.grupo].push(q);
+  });
+  return out;
+};
+function registro(qid) {
+  if (!estudo.historico[qid]) estudo.historico[qid] = { acertos: 0, tentativas: 0, updatedAt: 0 };
+  return estudo.historico[qid];
+}
+function registrarResp(qid, certa) {
+  const r = registro(qid);
+  r.tentativas++;
+  if (certa) { r.acertos++; r.acertoEm = Date.now(); } else { r.erroEm = Date.now(); r.ultimoErro = Date.now(); }
+  r.updatedAt = Date.now();
+  saveLocal();
+}
+/* Revisão espaçada simples: agenda a cada erro para 1/3/7/14/30 dias após o último erro.
+   A cada acerto seguinte, o item sai da lista de devidos (corrigido). */
+function revisoesDevidas(hoje = Date.now()) {
+  const out = [];
+  const diasRestantes = data.total_dias - diaAtual();
+  const maxInt = Math.max(1, Math.min(30, diasRestantes));
+  const intervalos = [1, 3, 7, 14, 30].filter(i => i <= maxInt);
+  for (const qid of Object.keys(estudo.historico)) {
+    const r = estudo.historico[qid];
+    if (!r.tentativas || r.ultimoErro === undefined) continue;
+    // se acertou depois do último erro, não está pendente
+    if (r.acertoEm && r.acertoEm > r.ultimoErro) continue;
+    const devido = intervalos.some(interv =>
+      hoje - r.ultimoErro >= interv * 86400000);
+    if (devido) out.push(qid);
+  }
+  return out;
+}
+
+function qByQuery(grupo, assunto) {
+  let lista = QUESTOES_ATIVAS;
+  if (grupo !== 'todas') lista = lista.filter(q => q.grupo === grupo);
+  if (assunto && assunto !== 'todos') lista = lista.filter(q => q.assunto === assunto);
+  return lista;
+}
+function tituloQ(q) {
+  return `${q.ano} · ${q.orgao} — ${q.cargo}`;
+}
+
+/* ---------------- Aba Questões ---------------- */
+let filtroQuestoes = { grupo: 'todas', assunto: 'todos', estudo: 'todas', limite: 10 };
+let sessaoQuestoes = null; // { ids:[], idx, certas, erradas, respondidas:{} }
+const ALT_LETRAS = ['A', 'B', 'C', 'D'];
+
+function renderQuestoesHome() {
+  const grupos = { 'todas': 'Todas', ...gruposRotulo };
+  const assuntos = [];
+  if (filtroQuestoes.grupo !== 'todas') {
+    const tax = ASSUNTOS.disciplinas[filtroQuestoes.grupo === 'informatica' ? 'informatica_geral' : filtroQuestoes.grupo];
+    if (tax) Object.entries(tax.assuntos || {}).forEach(([k, v]) => assuntos.push([k, v.rotulo]));
+  } else {
+    Object.values(ASSUNTOS.disciplinas).forEach(d =>
+      Object.entries(d.assuntos || {}).forEach(([k, v]) => assuntos.push([k, v.rotulo])));
+  }
+
+  const sel = (n, v, onChange) =>
+    `<select data-filtro="${n}" class="sel">${Object.entries(v).map(([k, l]) =>
+      `<option value="${k}" ${filtroQuestoes[n] === k ? 'selected' : ''}>${esc(l)}</option>`).join('')}</select>`;
+
+  const grupoSel = sel('grupo', grupos);
+  const assuntoOpts = `<option value="todos">Todos os assuntos</option>` +
+    assuntos.map(([k, l]) => `<option value="${k}" ${filtroQuestoes.assunto === k ? 'selected' : ''}>${esc(l)}</option>`).join('');
+  const assuntoSel = `<select data-filtro="assunto" class="sel">${assuntoOpts}</select>`;
+
+  const html = `
+    <div class="q-home">
+      <div class="filtros">
+        ${grupoSel}${assuntoSel}
+        <label class="filtro-linha">Modo
+          <select data-filtro="estudo" class="sel">
+            <option value="todas" ${filtroQuestoes.estudo==='todas'?'selected':''}>Todas</option>
+            <option value="erros" ${filtroQuestoes.estudo==='erros'?'selected':''}>Só erros (caderno)</option>
+            <option value="novas" ${filtroQuestoes.estudo==='novas'?'selected':''}>Nunca respondidas</option>
+            <option value="revisao" ${filtroQuestoes.estudo==='revisao'?'selected':''}>Revisão devida</option>
+          </select>
+        </label>
+        <label class="filtro-linha">Quantidade
+          <select data-filtro="limite" class="sel">
+            ${[5,10,15,25,50].map(n=>`<option value="${n}" ${filtroQuestoes.limite==n?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </label>
+        <button class="btn-primario" id="btn-iniciar-sessao">▶ Iniciar sessão de estudo</button>
+      </div>
+      <div class="q-count" id="q-count"></div>
+    </div>`;
+  setConteudo('questoes-home', html);
+  const lista = sessaoQuestoes ? sessaoQuestoes.ids.map(id => QUESTOES.find(q => q.id === id)) : [];
+  atualizarContagem();
+}
+
+function ativarSessaoPelaLista() {
+  let lista = qByQuery(filtroQuestoes.grupo, filtroQuestoes.assunto);
+  if (filtroQuestoes.estudo === 'erros') {
+    lista = lista.filter(q => {
+      const r = registro(q.id);
+      return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
+    });
+  }
+  if (filtroQuestoes.estudo === 'novas') {
+    lista = lista.filter(q => registro(q.id).tentativas === 0);
+  }
+  if (filtroQuestoes.estudo === 'revisao') {
+    const dev = new Set(revisoesDevidas());
+    lista = lista.filter(q => dev.has(q.id));
+  }
+  const limit = Math.min(filtroQuestoes.limite, lista.length);
+  // embaralha de forma estável para não repetir ordem a cada vez
+  const sorted = [...lista].sort(() => Math.random() - 0.5).slice(0, limit);
+  if (!sorted.length) { $('q-count').textContent = 'Nenhuma questão nesse filtro.'; return; }
+  sessaoQuestoes = { ids: sorted.map(q => q.id), idx: 0, respondidas: {}, certas: 0, erradas: 0 };
+  hide('questoes-home');
+  show('questoes-sessao');
+  renderQuestaoSessao();
+}
+
+function atualizarContagem() {
+  let lista = qByQuery(filtroQuestoes.grupo, filtroQuestoes.assunto);
+  if (filtroQuestoes.estudo !== 'todas') {
+    if (filtroQuestoes.estudo === 'erros') lista = lista.filter(q => { const r = registro(q.id); return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro); });
+    if (filtroQuestoes.estudo === 'novas') lista = lista.filter(q => registro(q.id).tentativas === 0);
+    if (filtroQuestoes.estudo === 'revisao') { const d = new Set(revisoesDevidas()); lista = lista.filter(q => d.has(q.id)); }
+  }
+  const el = $('q-count');
+  if (el) el.textContent = `${lista.length} questão(ões) disponíveis`;
+}
+
+function alternativaHtml(q) {
+  return Object.entries(q.alternativas).map(([l, txt]) =>
+    `<button class="alt" data-alt="${l}" data-correta="${q.gabarito === l ? 1 : 0}">
+       <span class="alt-letra">${l}</span><span class="alt-txt">${esc(txt)}</span>
+     </button>`).join('');
+}
+
+function renderQuestaoSessao() {
+  if (!sessaoQuestoes) return;
+  const q = QUESTOES.find(x => x.id === sessaoQuestoes.ids[sessaoQuestoes.idx]);
+  const resp = sessaoQuestoes.respondidas[q.id];
+  const total = sessaoQuestoes.ids.length;
+  const prog = Math.round(sessaoQuestoes.idx / total * 100);
+  const html = `
+    <div class="q-sessao">
+      <div class="q-head">
+        <span class="q-prog">Questão ${sessaoQuestoes.idx + 1} de ${total}</span>
+        <span class="q-grupo">${esc(gruposRotulo[q.grupo] || q.grupo)}</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width:${prog}%"></div></div>
+      <div class="q-enunciado">${esc(q.enunciado)}</div>
+      <div class="q-alts">${alternativaHtml(q)}</div>
+      ${resp !== undefined ? `
+        <div class="q-feedback ${resp.certa ? 'certo' : 'errado'}">
+          ${resp.certa ? '✔ Correta!' : `✘ Errada — gabarito ${esc(q.gabarito)}`}
+        </div>` : ''}
+      <div class="q-nav">
+        <button class="btn-sec" id="btn-q-ant" ${sessaoQuestoes.idx === 0 ? 'disabled' : ''}>‹ Anterior</button>
+        ${sessaoQuestoes.idx === total - 1
+          ? `<button class="btn-primario" id="btn-q-fim">Finalizar sessão</button>`
+          : `<button class="btn-primario" id="btn-q-prox">Próxima ›</button>`}
+      </div>
+    </div>`;
+  setConteudo('questoes-sessao', html);
+  marcarAltSel(q.id, resp);
+}
+
+function marcarAltSel(qid, resp) {
+  if (!resp) return;
+  const q = QUESTOES.find(x => x.id === qid);
+  document.querySelectorAll('[data-alt]').forEach(b => {
+    if (b.dataset.alt === resp.alt) b.classList.add('sel');
+    if (b.dataset.alt === q.gabarito) b.classList.add('corr');
+  });
+}
+
+/* ---------------- Aba Simulados ---------------- */
+let sessaoSimulado = null; // { simuladoIndex, ids, idx, respostas:{} }
+let timerSimulado = null;
+
+function renderSimuladosHome() {
+  const html = SIMULADOS.map((s, i) => {
+    const done = sessaoSimulado && sessaoSimulado.simuladoIndex === i;
+    const cls = done ? 'ativo' : '';
+    return `<div class="sim-card ${cls}">
+      <div class="sim-head">
+        <b>${esc(s.rotulo)}</b>
+        <span class="sim-meta">${s.total} questões · ${s.duracao_min} min</span>
+      </div>
+      <div class="sim-disc">${Object.entries(s.disciplinas).map(([k, v]) => `${esc(k)}: ${v}`).join(' · ')}</div>
+      <button class="btn-primario" data-sim="${i}">${done ? '↺ Continuar' : '▶ Iniciar'}</button>
+    </div>`;
+  }).join('');
+  setConteudo('simulados-home', html);
+}
+
+function iniciarSimulado(i) {
+  const s = SIMULADOS[i];
+  sessaoSimulado = { simuladoIndex: i, ids: s.questoes, idx: 0, respostas: {}, inicio: Date.now() };
+  estudoTemp = { tipo: 'simulado', simulado: i };
+  renderSimuladoSessao();
+}
+
+function iniciarSimuladoComTimer(i, force) {
+  if (force || !sessaoSimulado || sessaoSimulado.simuladoIndex !== i) iniciarSimulado(i);
+  else renderSimuladoSessao();
+  if (timerSimulado) clearInterval(timerSimulado);
+  timerSimulado = setInterval(() => {
+    const el = $('sim-tempo');
+    if (el && sessaoSimulado) {
+      const dec = Math.floor((Date.now() - sessaoSimulado.inicio) / 1000);
+      const rest = SIMULADOS[sessaoSimulado.simuladoIndex].duracao_min * 60 - dec;
+      const mm = String(Math.floor(Math.max(0, rest) / 60)).padStart(2, '0');
+      const ss = String(Math.max(0, rest) % 60).padStart(2, '0');
+      el.textContent = `${mm}:${ss}`;
+      if (rest <= 0) { clearInterval(timerSimulado); timerSimulado = null; finalizarSimulado(); }
+    }
+  }, 1000);
+}
+
+function renderSimuladoSessao() {
+  if (!sessaoSimulado) return;
+  const s = SIMULADOS[sessaoSimulado.simuladoIndex];
+  const q = QUESTOES.find(x => x.id === sessaoSimulado.ids[sessaoSimulado.idx]);
+  const total = s.questoes.length;
+  const respostas = sessaoSimulado.respostas;
+  const respondidasCount = Object.keys(respostas).length;
+  // cronômetro
+  const decorrido = Math.floor((Date.now() - sessaoSimulado.inicio) / 1000);
+  const restantes = s.duracao_min * 60 - decorrido;
+  const mm = String(Math.floor(Math.max(0, restantes) / 60)).padStart(2, '0');
+  const ss = String(Math.max(0, restantes) % 60).padStart(2, '0');
+
+  const nav = s.questoes.map((id, n) =>
+    `<button class="sim-nav ${n === sessaoSimulado.idx ? 'atual' : ''} ${respostas[id] ? 'resp' : ''}" data-nav="${n}">${n + 1}</button>`).join('');
+
+  const html = `
+    <div class="sim-sessao">
+      <div class="sim-top">
+        <span>${esc(s.rotulo)}</span>
+        <span class="sim-tempo" id="sim-tempo">${mm}:${ss}</span>
+      </div>
+      <div class="sim-navbar">${nav}</div>
+      <div class="q-enunciado">${esc(q.enunciado)}</div>
+      <div class="q-alts">${alternativaHtml(q)}</div>
+      <div class="q-nav">
+        <button class="btn-sec" id="btn-sim-ant" ${sessaoSimulado.idx === 0 ? 'disabled' : ''}>‹</button>
+        <span class="q-prog">${sessaoSimulado.idx + 1}/${total}</span>
+        <button class="btn-sec" id="btn-sim-prox" ${sessaoSimulado.idx === total - 1 ? 'disabled' : ''}>›</button>
+      </div>
+      <button class="btn-primario full" id="btn-sim-fim">Finalizar e corrigir</button>
+    </div>`;
+  setConteudo('simulado-sessao', html);
+  // re-aplica seleção se já escolheu
+  const sel = respostas[q.id];
+  if (sel) {
+    document.querySelectorAll('[data-alt]').forEach(b => {
+      if (b.dataset.alt === sel) b.classList.add('sel');
+    });
+  }
+}
+
+function finalizarSimulado() {
+  if (!sessaoSimulado) return;
+  const s = SIMULADOS[sessaoSimulado.simuladoIndex];
+  const respostas = sessaoSimulado.respostas;
+  let certas = 0, emBranco = 0;
+  // corrige todas as respondidas no histórico
+  s.questoes.forEach(id => {
+    const r = respostas[id];
+    const q = QUESTOES.find(x => x.id === id);
+    if (!q) return;
+    if (!r) { emBranco++; return; }
+    const certa = r === q.gabarito;
+    if (certa) certas++;
+    registrarResp(id, certa);
+  });
+  const total = s.questoes.length;
+  const pct = Math.round(certas / total * 100);
+  const html = `
+    <div class="sim-resultado">
+      <h2>${esc(s.rotulo)} — resultado</h2>
+      <div class="sim-score">${certas}/${total}</div>
+      <div class="sim-pct">${pct}% de acertos</div>
+      <div class="sim-detalhe">Em branco: ${emBranco}</div>
+      <p class="sim-verdict">${obterVeredicto(pct)}</p>
+      <button class="btn-primario" id="btn-sim-repetir">↺ Fazer de novo</button>
+      <button class="btn-sec" id="btn-sim-voltar">‹ Voltar aos simulados</button>
+    </div>`;
+  setConteudo('simulado-sessao', html);
+  if (timerSimulado) { clearInterval(timerSimulado); timerSimulado = null; }
+  renderAnalise();
+  renderHojeFoco();
+}
+function obterVeredicto(pct) {
+  if (pct >= 80) return 'Excelente! Nível acima da aprovação para esta disciplina simulada.';
+  if (pct >= 60) return 'Bom resultado. Reforce os assuntos do mapa de fraquezas.';
+  if (pct >= 50) return 'Você atingiu a média mínima. Hora de reforçar o que errou.';
+  return 'Abaixo da média. Revise a teoria e refaça as questões erradas.';
+}
+
+/* ---------------- Aba Análise ---------------- */
+function renderFraquezas() {
+  // por disciplina/assunto: acertos/tentativas no histórico
+  const dados = {};
+  QUESTOES_ATIVAS.forEach(q => {
+    const r = registro(q.id);
+    if (!r.tentativas) return;
+    const key = `${gruposRotulo[q.grupo]} › ${q.assunto_rotulo || q.assunto || q.grupo}`;
+    dados[key] = dados[key] || { certas: 0, tot: 0 };
+    dados[key].tot += r.tentativas;
+    dados[key].certas += r.acertos;
+  });
+  const ord = Object.entries(dados).sort((a, b) => (a[1].certas / a[1].tot) - (b[1].certas / b[1].tot));
+  const html = `
+    <h3>Mapa de fraquezas</h3>
+    ${ord.length ? ord.map(([k, v]) => {
+      const pct = Math.round(v.certas / v.tot * 100);
+      const fraca = pct < 70;
+      return `<div class="fraca ${fraca ? 'fraca-a' : ''}">
+        <div class="fraca-linha"><span>${esc(k)}</span><b>${pct}%</b></div>
+        <div class="bar"><div class="bar-fill ${fraca ? 'bar-red' : ''}" style="width:${pct}%"></div></div>
+        <div class="fraca-sub">${v.certas}/${v.tot} acertos</div>
+      </div>`;
+    }).join('') : '<p class="vazio">Responda questões para ver o mapa de fraquezas.</p>'}
+    <div class="dica">Assuntos abaixo de 70% merecem reforço.</div>`;
+  setConteudo('painel-fraquezas', html);
+}
+
+function renderCadernoErros() {
+  const erros = QUESTOES_ATIVAS.filter(q => {
+    const r = registro(q.id);
+    return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
+  });
+  const html = `
+    <h3>Caderno de erros (${erros.length})</h3>
+    ${erros.length ? `<button class="btn-primario" id="btn-treinar-erros">▶ Revisar ${Math.min(25, erros.length)} erros</button>` : ''}
+    ${erros.slice(0, 8).map(q =>
+      `<div class="erro-item"><span class="erro-g">${esc(gruposRotulo[q.grupo])}</span> ${esc(q.enunciado.slice(0, 90))}… <span class="erro-gab">gabarito ${esc(q.gabarito)}</span></div>`
+    ).join('')}`;
+  setConteudo('painel-erros', html);
+}
+
+function renderAnalise() {
+  if ($('painel-fraquezas')) renderFraquezas();
+  if ($('painel-erros')) renderCadernoErros();
+}
+
+/* ---------------- Aba Hoje (extra) ---------------- */
+function renderHojeFoco() {
+  const devidas = revisoesDevidas();
+  const diaAlvo = diaHojeAlvo();
+  // questões previstas: junta assuntos das seções do dia com o banco
+  let previstas = [];
+  if (diaAlvo) {
+    const txt = diaAlvo.secoes.map(s => (s.conteudo || '') + ' ' + s.titulo).join(' ').toLowerCase();
+    previstas = QUESTOES_ATIVAS.filter(q => {
+      const alvo = (q.assunto_rotulo || '').toLowerCase() + ' ';
+      return q.grupo === 'lingua_portuguesa' && txContains(txt, alvo) ||
+             q.grupo === 'rac_logico' && txContains(txt, 'lógica') ||
+             q.grupo === 'informatica' && txContains(txt, 'informática');
+    });
+    if (previstas.length > 12) previstas = previstas.slice(0, 12);
+  }
+  const html = `
+    <div class="foco">
+      <div class="foco-titulo">🎯 Foco de hoje</div>
+      <div class="mini-stats">
+        <div class="stat"><b>${devidas.length}</b><span>revisões<br>devidas</span></div>
+        <div class="stat"><b>${previstas.length}</b><span>questões<br>sugeridas</span></div>
+        <div class="stat"><b>${data.total_dias - diaAtual()}</b><span>dias até<br>a prova</span></div>
+      </div>
+      ${devidas.length ? `<button class="btn-primario" id="btn-foco-revisao">▶ Revisar ${Math.min(10, devidas.length)} devidas</button>` : ''}
+      ${previstas.length ? `<button class="btn-primario btn-secondary" id="btn-foco-questoes">▶ ${previstas.length} questões do dia</button>` : ''}
+    </div>`;
+  setConteudo('hoje-foco', html);
+}
+function txContains(txt, sub) {
+  // sub é palavra; verifica ocorrência com fronteiras simples
+  sub = sub.toLowerCase().trim();
+  if (!sub) return false;
+  return txt.includes(sub);
+}
+
+/* ---------------- Aba Biblioteca ---------------- */
+function escSearch(s) {
+  return encodeURIComponent(s.trim());
+}
+function renderBiblioteca() {
+  if (!$('biblioteca')) return;
+  // agrupa pelo número de questões do edital: especificos primeiro (maior peso)
+  const disc = Object.keys(ASSUNTOS.disciplinas).sort((a, b) =>
+    (ASSUNTOS.disciplinas[b].peso || 0) - (ASSUNTOS.disciplinas[a].peso || 0));
+  const html = disc.map(dk => {
+    const d = ASSUNTOS.disciplinas[dk];
+    const assuntos = Object.keys(d.assuntos);
+    return `
+      <div class="bib-disc">
+        <div class="bib-disc-head">
+          <span class="bib-disc-nome">${esc(d.rotulo)}</span>
+          <span class="bib-disc-peso">${d.questoes_prova} questões · ${(d.peso || 0).toLocaleString('pt-BR', {maximumFractionDigits:0})} pts</span>
+        </div>
+        <div class="bib-grid">
+          ${assuntos.map(a => {
+            const rot = d.assuntos[a].rotulo;
+            const q = `concurso ${d.rotulo} ${rot} edital técnico de informática 2026`;
+            return `<button class="bib-item" data-yts="${escSearch(q)}">
+              <span class="bib-rotulo">${esc(rot)}</span>
+              <span class="bib-yt">▶ YouTube</span>
+            </button>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }).join('');
+  setConteudo('biblioteca', html);
 }
 
 /* ---------------- renderAll ---------------- */
@@ -455,6 +1169,13 @@ function renderAll() {
   renderListaDias();
   renderFases();
   renderProgresso();
+  renderAnalise();
+  renderHojeFoco();
+  renderBiblioteca();
+  renderQuestoesHome();
+  renderSimuladosHome();
+  if (sessaoQuestoes) renderQuestaoSessao();
+  if (sessaoSimulado) renderSimuladoSessao();
   if (modalDia) {
     const d = DIAS.find(x => x.dia === modalDia);
     if (d) openDia(d);
@@ -462,9 +1183,15 @@ function renderAll() {
 }
 
 /* ---------------- Init ---------------- */
+// hook para testes/inspeção (apenas em localhost)
+if (['localhost', '127.0.0.1'].includes(location.hostname)) {
+  window.__APP__ = { get QUESTOES() { return QUESTOES; }, get estudo() { return estudo; }, get progresso() { return progresso; }, get sessaoQuestoes() { return sessaoQuestoes; }, get sessaoSimulado() { return sessaoSimulado; }, mergeProgresso, mergeHistorico };
+}
+
 async function init() {
   loadLocal();
   bindEvents();
+  showSplash();
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(e => console.warn('SW falhou:', e.message));
@@ -480,6 +1207,7 @@ async function init() {
 
   const fireOk = initFirebase();
   if (fireOk) {
+    // Aguarda o estado de auth (não há timeout arbitrário). Enquanto isso, splash.
     auth.onAuthStateChanged(async u => {
       if (u) {
         user = u;
@@ -492,6 +1220,9 @@ async function init() {
         progresso = {};
         showLogin();
       }
+    }, err => {
+      console.error('Erro no onAuthStateChanged:', err);
+      showLogin();
     });
   } else {
     // Modo local: usuário clica em "Entrar com Google" e entra sem conta
@@ -502,6 +1233,8 @@ async function init() {
       user = { displayName: saved, fake: true };
       showApp();
       renderAll();
+    } else {
+      showLogin();
     }
   }
 }

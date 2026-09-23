@@ -14,8 +14,17 @@
 </head>
 <body>
 
+  <!-- ===== SPLASH (aguarda estado de auth) ===== -->
+  <div id="view-loading" class="view">
+    <div class="splash">
+      <div class="logo">&#x1F4D5;</div>
+      <div class="spinner"></div>
+      <p>Carregando sua sessão...</p>
+    </div>
+  </div>
+
   <!-- ===== TELA DE LOGIN ===== -->
-  <div id="view-login" class="view">
+  <div id="view-login" class="view hidden">
     <div class="login-box">
       <div class="logo">&#x1F4D5;</div>
       <h1>Cronograma IDIB</h1>
@@ -44,11 +53,13 @@
     </header>
 
     <!-- Abas -->
-    <nav class="tabs">
+    <nav class="tabs" id="barra-tabs">
       <button class="tab active" data-tab="hoje">Hoje</button>
+      <button class="tab" data-tab="questoes">Questões</button>
+      <button class="tab" data-tab="simulados">Simulados</button>
       <button class="tab" data-tab="dias">Cronograma</button>
-      <button class="tab" data-tab="fases">Fases</button>
-      <button class="tab" data-tab="progresso">Progresso</button>
+      <button class="tab" data-tab="analise">Análise</button>
+      <button class="tab" data-tab="biblioteca">Biblioteca</button>
     </nav>
 
     <main>
@@ -57,6 +68,20 @@
       <section id="tab-hoje" class="panel active">
         <div id="hoje-card"></div>
         <div id="hoje-extra"></div>
+        <div id="pomodoro"></div>
+        <div id="hoje-foco"></div>
+      </section>
+
+      <!-- ABA QUESTÕES -->
+      <section id="tab-questoes" class="panel">
+        <div id="questoes-home"></div>
+        <div id="questoes-sessao" class="hidden"></div>
+      </section>
+
+      <!-- ABA SIMULADOS -->
+      <section id="tab-simulados" class="panel">
+        <div id="simulados-home"></div>
+        <div id="simulado-sessao" class="hidden"></div>
       </section>
 
       <!-- ABA CRONOGRAMA -->
@@ -67,14 +92,18 @@
         <div id="lista-dias" class="lista-dias"></div>
       </section>
 
-      <!-- ABA FASES -->
-      <section id="tab-fases" class="panel">
+      <!-- ABA ANÁLISE -->
+      <section id="tab-analise" class="panel">
+        <div id="resumo-progresso"></div>
         <div id="lista-fases"></div>
+        <div id="painel-fraquezas"></div>
+        <div id="painel-erros"></div>
       </section>
 
-      <!-- ABA PROGRESSO -->
-      <section id="tab-progresso" class="panel">
-        <div id="resumo-progresso"></div>
+      <!-- ABA BIBLIOTECA -->
+      <section id="tab-biblioteca" class="panel">
+        <p class="bib-intro">Clique em um assunto do edital para abrir uma <b>busca no YouTube</b> (o app não guarda vídeos: você escolhe o que assistir).</p>
+        <div id="biblioteca"></div>
       </section>
 
     </main>

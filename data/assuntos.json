@@ -1,0 +1,168 @@
+{
+  "fonte": "Edital 01/2026 Acaraú/CE — Anexo IV (Conteúdo Programático) — banca IDIB",
+  "nivel": "Nível Médio/Técnico — Técnico de Informática (COD 01201)",
+  "gerado_em": "2026-09-22",
+  "nota": "Keywords são radicais/acento-insensíveis; o classificador normaliza o texto (NFKD) antes de casar.",
+  "disciplinas": {
+    "lingua_portuguesa": {
+      "rotulo": "Língua Portuguesa",
+      "questoes_prova": 14,
+      "peso": 28.0,
+      "assuntos": {
+        "interpretacao_texto": {
+          "rotulo": "Leitura e interpretação de textos",
+          "keywords": ["texto", "lê-se", "le-se", "interpreta", "compreensão do texto", "trecho", "segundo o", "de acordo com o texto", "que se afirma", "assertiva", "informação presente", "conota", "denota"]
+        },
+        "coesao_coerencia": {
+          "rotulo": "Articulação do texto; coesão e coerência",
+          "keywords": ["coesão", "coerência", "conectiv", "nexo", "operador", "referencial", "anáfora", "marcador", "articulador", "portanto", "contudo", "todavia", "entretanto", "no entanto", "além disso", "anáfor"]
+        },
+        "significacao_palavras": {
+          "rotulo": "Significação contextual de palavras e expressões",
+          "keywords": ["significa", "significação", "sentido", "sinônim", "antonim", "expressão", "equivalência semântica", "conotação", "denotação", "expressão destacada"]
+        },
+        "ortografia_acentuacao": {
+          "rotulo": "Ortografia oficial e acentuação gráfica",
+          "keywords": ["ortograf", "acentua", "acento", "acentuação gráfica", "acentua-se", "paroxíton", "oxíton", "proparoxíton", "hiato", "ditongo", "tila", "hífen", "diacritic"]
+        },
+        "pontuacao": {
+          "rotulo": "Pontuação",
+          "keywords": ["vírgul", "virgul", "travessão", "dois-pontos", "ponto e vírgula", "aspas", "exclamação", "interroga", "parêntese", "pontua"]
+        },
+        "morfologia": {
+          "rotulo": "Morfologia; estrutura e formação de palavras; classes de palavras",
+          "keywords": ["prefix", "sufix", "radica", "derivação", "composição", "morfem", "interjeiç", "substantiv", "adjetiv", "advérbi", "numera", "artigo", "flexão de gênero", "flexão de número", "grau", "classes de palavras"]
+        },
+        "verbos": {
+          "rotulo": "Emprego de tempos e modos verbais",
+          "keywords": ["verbo", "verbal", "conjuga", "infinitiv", "gerúndi", "particípio", "pretérito", "futuro do", "presente do", "modo indicativo", "modo subjuntivo", "locução verbal", "forma nominal"]
+        },
+        "pronomes": {
+          "rotulo": "Pronomes; emprego, formas de tratamento e colocação",
+          "keywords": ["pronome", "próclise", "clise", "relativo", "colocação pronominal", "forma de tratamento", "possessiv", "demonstrativ", "indefinido"]
+        },
+        "concordancia_regencia": {
+          "rotulo": "Concordância e regência (nominal e verbal)",
+          "keywords": ["concordân", "concordan", "regênc", "regenc", "crase", "plural", "singular do", "concorda"]
+        },
+        "sintaxe": {
+          "rotulo": "Sintaxe (coordenação, subordinação, período, funções sintáticas)",
+          "keywords": ["sintaxe", "sintática", "sujeito", "predicad", "objeto direto", "objeto indireto", "oração", "orações", "coordenação", "subordinação", "período simples", "período composto", "voz passiva", "voz ativa", "complemento", "aposto", "vocativo", "sintaticamente", "função sintática"]
+        }
+      }
+    },
+    "rac_logico": {
+      "rotulo": "Raciocínio Lógico",
+      "questoes_prova": 6,
+      "peso": 12.0,
+      "assuntos": {
+        "logica_proposicional": {
+          "rotulo": "Proposições, conectivos, tabela-verdade, equivalência e negação",
+          "keywords": ["proposiç", "proposic", "conectiv", "tabela-verdade", "tabela verdade", "condicional", "bicondicional", "disjunç", "conjunç", "negaç", "equivale", "se e somente se", "afirmaç", "verdadeira", "falácia", "argumento", "premissa", "conclusão", "silogismo", "validade"]
+        },
+        "sequencias_padroes": {
+          "rotulo": "Sequências e padrões numéricos; progressões",
+          "keywords": ["sequênc", "sequenc", "progressão", "progressao", "termo", "padrão numéric", "sucessor", "antec", "dobro", "triplo", "razão da", "paulatin", "padrões"]
+        },
+        "raciocinio_quantitativo": {
+          "rotulo": "Aritmética: porcentagem, razão, proporção, regra de três, médias",
+          "keywords": ["porcentagem", "percentual", "por cento", "razão", "razões", "proporç", "regra de três", "regra de tres", "densidade", "área de", "perímetr", "média", "medias", "probabilidade", "chance", "população", "habitantes", "quilômetr", "km", "litro", "fração", "frações", "mmc", "mdc", "divisão proporcional"]
+        },
+        "combinatoria": {
+          "rotulo": "Análise combinatória e contagem",
+          "keywords": ["combinatór", "combina", "arranj", "permutaç", "fatorial", "agrupamento", "maneiras", "possibilidade", "escolher", "orden", "senha", "código de", "formar"]
+        }
+      }
+    },
+    "informatica_geral": {
+      "rotulo": "Informática (conhecimentos comuns)",
+      "questoes_prova": 6,
+      "peso": 12.0,
+      "assuntos": {
+        "hardware_software": {
+          "rotulo": "Fundamentos de informática (hardware, software, memória, unidades)",
+          "keywords": ["hardware", "software", "memória", "memoria", "processador", "dispositivo de", "cpu", "bit", "byte", "kbyte", "megabyte", "gigabyte", "armazenament", "placa", "periféric", "impressora", "monitor", "teclado", "mouse", "disco", "barramento", "unidade de medida", "dado", "binário", "binario"]
+        },
+        "sistemas_operacionais": {
+          "rotulo": "Sistemas operacionais (Windows 11 e Linux Ubuntu)",
+          "keywords": ["windows", "linux", "ubuntu", "sistema operacional", "área de trabalho", "barra de tarefas", "menu iniciar", "pasta", "arquivo", "atalho", "lixeira", "área de transferência", "explorador", "prompt", "diretório", "extensão de", "formato de arquivo", "renomear", "copiar", "colar", "colar especial"]
+        },
+        "editores_texto": {
+          "rotulo": "Editores de texto (Word, LibreOffice Writer)",
+          "keywords": ["word", "brwriter", "broffice writer", "writer", "formata", "parágraf", "estilo", "cabeçalho", "rodapé", "ortografia e gramática", "marcador", "indent", "página", "layout", "documento de texto"]
+        },
+        "planilhas": {
+          "rotulo": "Planilhas eletrônicas (Excel, LibreOffice Calc)",
+          "keywords": ["excel", "calc", "planilha", "célula", "celula", "fórmula", "formula", "soma", "função", "funções", "gráfic", "grafic", "referência relativa", "referência absoluta", "classifica", "filtro"]
+        },
+        "apresentacoes": {
+          "rotulo": "Programas de apresentação (PowerPoint, LibreOffice Impress)",
+          "keywords": ["powerpoint", "power point", "impress", "slide", "apresentaç", "animaç", "transiçã", "eslaide", "modelo de slides", "pps"]
+        },
+        "internet_navegadores": {
+          "rotulo": "Internet e navegadores; protocolos de rede",
+          "keywords": ["navegador", "chrome", "firefox", "edge", "internet", "intranet", "www", "url", "protocolo", "http", "https", "tcp/ip", "tcp", "ip ", "dns", "servidor", "rede de computadores", "rede local", "internet explorer"]
+        },
+        "correio_eletronico": {
+          "rotulo": "Correio eletrônico (Outlook, Thunderbird, Gmail)",
+          "keywords": ["e-mail", "email", "e mail", "correio eletrôn", "outlook", "thunderbird", "gmail", "smtp", "pop3", "imap", "cc cco", "anex", "mensagem eletrônica", "webmail", "remetente", "destinatário"]
+        },
+        "nuvem_colaboracao": {
+          "rotulo": "Nuvem e trabalho colaborativo (OneDrive, Drive, Teams, Meet, Zoom)",
+          "keywords": ["nuvem", "onedrive", "google drive", "drive", "teams", "meet", "zoom", "cloud", "sincroniza", "compartilha", "videoconferên", "armazenamento online", "calendário"]
+        },
+        "seguranca_informacao": {
+          "rotulo": "Segurança da informação (CIA, malwares, phishing, LGPD)",
+          "keywords": ["segurança", "seguranca", "vírus", "virus", "malware", "phishing", "ransomware", "trojan", "spyware", "firewall", "backup", "senha", "autentica", "confidencialidade", "integridade", "disponibilidade", "lgpd", "dados pesso", "criptograf", "engenharia social", "biométric", "código malicioso"]
+        }
+      }
+    },
+    "conhecimentos_especificos": {
+      "rotulo": "Conhecimentos Específicos do Cargo (Técnico de Informática)",
+      "questoes_prova": 24,
+      "peso": 48.0,
+      "assuntos": {
+        "internet_web_bases": {
+          "rotulo": "Internet, bases de dados e fontes de informação on-line",
+          "keywords": ["internet", "web", "intranet", "extranet", "url", "ip", "dns", "http", "https", "base de dados", "fontes de informação", "pesquisa", "www", "mecanismo de busca", "operadores de busca"]
+        },
+        "redes_sociais_corporativas": {
+          "rotulo": "Redes sociais e aplicabilidade corporativa",
+          "keywords": ["rede social", "instagram", "whatsapp", "linkedin", "corporativa", "youtube"]
+        },
+        "cloud_computing": {
+          "rotulo": "Cloud computing e novas tecnologias de internet",
+          "keywords": ["cloud", "nuvem", "computação em nuvem", "software como serviço", "saas", "iaas", "paas"]
+        },
+        "seguranca_redes_cargo": {
+          "rotulo": "Segurança da informação (confidencialidade, disponibilidade, integridade); proteção de redes",
+          "keywords": ["confidencialidade", "disponibilidade", "integridade", "segurança", "seguranca", "proteção de redes", "vulnerabilidad", "ataque", "vazamento"]
+        },
+        "redes_cargo": {
+          "rotulo": "Compartilhamento e proteção de redes",
+          "keywords": ["rede", "roteador", "firewall", "lan", "wlan", "switch", "hub", "servidor", "compartilhamento de arquivos", "endereço"]
+        },
+        "certificados_digitais": {
+          "rotulo": "Certificados digitais e assinaturas digitais",
+          "keywords": ["certificado digital", "assinatura digital", "icp-brasil", "icp brasil", "e-cpf", "e-cnpj", "token", "autoridade certificadora", "chave pública", "chave privada", "criptograf"]
+        },
+        "correio_eletronico_cargo": {
+          "rotulo": "Correio eletrônico (preparo de mensagens, anexação, cópias)",
+          "keywords": ["correio eletrôn", "e-mail", "email", "anex", "cópia oculta", "cópia para", "mensagem", "assunto do", "outlook", "webmail", "protocolo de correio"]
+        },
+        "office_office365": {
+          "rotulo": "Microsoft Office 365 (Word e PowerPoint: formatação, tabelas, cabeçalho/rodapé, impressão, apresentações)",
+          "keywords": ["word", "powerpoint", "power point", "office", "formata", "tabela", "cabeçalho", "rodapé", "configurar página", "impressão", "ortografia e gramática", "inserir", "exibir", "animação", "slide", "pps", "transição", "macro"]
+        },
+        "windows11_cargo": {
+          "rotulo": "Windows 11 (pastas, arquivos, atalhos, área de trabalho e área de transferência)",
+          "keywords": ["windows 11", "windows", "pasta", "diretório", "diretorio", "atalho", "área de trabalho", "área de transferência", "arquivo", "explorador de arquivos"]
+        },
+        "data_hora_fuso": {
+          "rotulo": "Configuração de data, hora e fuso horário",
+          "keywords": ["fuso horário", "fuso", "configurar data", "ajustar data", "hora local"]
+        }
+      }
+    }
+  }
+}

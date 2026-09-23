@@ -1,0 +1,51 @@
+{
+ "total": 566,
+ "no_edital": 99,
+ "aproveitaveis": 467,
+ "anuladas": 28,
+ "por_grupo": {
+  "lingua_portuguesa": 316,
+  "rac_logico": 69,
+  "informatica": 82
+ },
+ "por_assunto": {
+  "lingua_portuguesa": {
+   "interpretacao_texto": 84,
+   "morfologia": 19,
+   "verbos": 4,
+   "significacao_palavras": 26,
+   "ortografia_acentuacao": 14,
+   "pronomes": 5,
+   "concordancia_regencia": 20,
+   "geral": 117,
+   "coesao_coerencia": 8,
+   "pontuacao": 4,
+   "sintaxe": 15
+  },
+  "rac_logico": {
+   "sequencias_padroes": 23,
+   "geral": 26,
+   "raciocinio_quantitativo": 9,
+   "logica_proposicional": 10,
+   "combinatoria": 1
+  },
+  "informatica": {
+   "sistemas_operacionais": 13,
+   "internet_navegadores": 12,
+   "editores_texto": 2,
+   "correio_eletronico": 8,
+   "planilhas": 15,
+   "seguranca_informacao": 5,
+   "internet_web_bases": 6,
+   "hardware_software": 19,
+   "seguranca_redes_cargo": 1,
+   "apresentacoes": 1
+  }
+ },
+ "gabarito_validos": [
+  "A",
+  "B",
+  "C",
+  "D"
+ ]
+}
