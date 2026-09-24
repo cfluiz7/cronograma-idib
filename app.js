@@ -345,6 +345,7 @@ function renderHoje() {
     </div>`;
   setConteudo('hoje-card', html);
   renderPomodoro();
+  renderHojePendencias();
 }
 
 /* ---------------- Pomodoro ---------------- */
@@ -606,11 +607,12 @@ function bindEvents() {
     if (e.target.closest('#btn-q-ant')) { sessaoQuestoes.idx--; renderQuestaoSessao(); return; }
     if (e.target.closest('#btn-q-fim')) {
       const totais = { certas: sessaoQuestoes.certas, erradas: sessaoQuestoes.erradas };
+      const eraPendente = sessaoQuestoes && sessaoQuestoes.titulo && sessaoQuestoes.titulo.includes('pendente');
       sessaoQuestoes = null;
       hide('questoes-sessao'); show('questoes-home');
       renderQuestoesHome();
-      renderAnalise(); renderHojeFoco();
-      alert(`Sessão concluída: ${totais.certas} certas · ${totais.erradas} erradas. Acesse o caderno de erros na aba Análise.`);
+      renderAnalise(); renderHojeFoco(); renderHojePendencias();
+      alert(`Sessão concluída: ${totais.certas} certas · ${totais.erradas} erradas. Acesse o caderno de erros na aba Análise.` + (eraPendente ? ' Marque o dia como concluído na aba Cronograma.' : ''));
       return;
     }
     // Seleção de alternativa (simulado)
@@ -674,8 +676,23 @@ function bindEvents() {
     if (e.target.closest('#btn-foco-questoes')) {
       const diaAlvo = diaHojeAlvo();
       if (diaAlvo) {
-        const qs = QUESTOES_ATIVAS.slice(0, 10);
-        sessaoQuestoes = { ids: qs.map(q => q.id), idx: 0, respondidas: {}, certas: 0, erradas: 0 };
+        const qs = questoesDoDia(diaAlvo);
+        if (!qs.length) return;
+        sessaoQuestoes = { ids: qs.map(q => q.id), idx: 0, respondidas: {}, certas: 0, erradas: 0, titulo: `Dia ${diaAlvo.dia}` };
+        $('barra-tabs').querySelector('[data-tab=questoes]').click();
+        hide('questoes-home'); show('questoes-sessao');
+        renderQuestaoSessao();
+      }
+      return;
+    }
+    // Quiz de um dia anterior pendente
+    const btnQuiz = e.target.closest('[data-quiz-dia]');
+    if (btnQuiz) {
+      const d = DIAS.find(x => x.dia === Number(btnQuiz.dataset.quizDia));
+      if (d) {
+        const qs = questoesDoDia(d);
+        if (!qs.length) return;
+        sessaoQuestoes = { ids: qs.map(q => q.id), idx: 0, respondidas: {}, certas: 0, erradas: 0, titulo: `Dia ${d.dia} (pendente)` };
         $('barra-tabs').querySelector('[data-tab=questoes]').click();
         hide('questoes-home'); show('questoes-sessao');
         renderQuestaoSessao();
@@ -892,7 +909,7 @@ function renderQuestaoSessao() {
     <div class="q-sessao">
       <div class="q-head">
         <span class="q-prog">Questão ${sessaoQuestoes.idx + 1} de ${total}</span>
-        <span class="q-grupo">${esc(gruposRotulo[q.grupo] || q.grupo)}</span>
+        <span class="q-grupo">${esc(sessaoQuestoes.titulo || gruposRotulo[q.grupo] || q.grupo)}</span>
       </div>
       <div class="bar"><div class="bar-fill" style="width:${prog}%"></div></div>
       <div class="q-enunciado">${esc(q.enunciado)}</div>
@@ -1094,21 +1111,65 @@ function renderAnalise() {
 }
 
 /* ---------------- Aba Hoje (extra) ---------------- */
+function gruposSecao(titulo) {
+  const t = (titulo || '').toUpperCase();
+  const out = [];
+  if (t.includes('PORTUGU')) out.push('lingua_portuguesa');
+  if (t.includes('LÓGICO') || t.includes('LOGICO')) out.push('rac_logico');
+  if (t.includes('INFORMÁTICA') || t.includes('INFORMATICA') || t.includes('ESPECÍFICOS') || t.includes('ESPECIFICOS')) out.push('informatica');
+  return out;
+}
+// questões sugeridas para um dia: prioriza as que têm keywords no conteúdo das seções,
+// com fallback para as do(s) grupo(s) do dia (nunca inventa conteúdo).
+function questoesDoDia(d, limite = 10) {
+  if (!d) return [];
+  const grupos = new Set();
+  d.secoes.forEach(s => gruposSecao(s.titulo).forEach(g => grupos.add(g)));
+  const txt = d.secoes.map(s => (s.conteudo || '') + ' ' + s.titulo).join(' ').toLowerCase();
+  const cand = QUESTOES_ATIVAS.filter(q => grupos.has(q.grupo));
+  if (!cand.length) return [];
+  const scored = cand.map(q => {
+    let sc = 0;
+    (q.keywords || []).forEach(k => { if (txt.includes(String(k).toLowerCase())) sc++; });
+    const rot = (q.assunto_rotulo || '').toLowerCase();
+    if (rot && txt.includes(rot)) sc += 5;
+    return { q, sc };
+  }).sort((a, b) => b.sc - a.sc);
+  const picks = scored.filter(x => x.sc > 0).map(x => x.q);
+  const resto = cand.filter(q => !picks.includes(q));
+  const qs = picks.concat(resto);
+  return qs.slice(0, limite);
+}
+function diasPendentes() {
+  const atual = diaAtual();
+  return DIAS.filter(d => d.dia < atual && !concluidoDia(d.dia));
+}
+function renderHojePendencias() {
+  const el = $('hoje-pendencias');
+  const pend = diasPendentes();
+  if (!pend.length) { if (el) el.innerHTML = ''; return; }
+  const html = `
+    <div class="foco pend">
+      <div class="foco-titulo">⏪ Dias anteriores pendentes (${pend.length})</div>
+      ${pend.map(d => {
+        const qs = questoesDoDia(d);
+        return `<div class="pend-dia">
+          <div class="pend-head">
+            <span class="pend-titulo">Dia ${d.dia} · ${esc(d.data)}</span>
+            <span class="pend-pct">${percentDia(d.dia)}%</span>
+          </div>
+          <div class="pend-entrega">${esc(d.entrega || '')}</div>
+          ${qs.length ? `<button class="btn-primario btn-secondary" data-quiz-dia="${d.dia}">▶ Quiz do dia ${d.dia} (${qs.length})</button>` : ''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  if (el) el.innerHTML = html;
+}
 function renderHojeFoco() {
   const devidas = revisoesDevidas();
   const diaAlvo = diaHojeAlvo();
   // questões previstas: junta assuntos das seções do dia com o banco
-  let previstas = [];
-  if (diaAlvo) {
-    const txt = diaAlvo.secoes.map(s => (s.conteudo || '') + ' ' + s.titulo).join(' ').toLowerCase();
-    previstas = QUESTOES_ATIVAS.filter(q => {
-      const alvo = (q.assunto_rotulo || '').toLowerCase() + ' ';
-      return q.grupo === 'lingua_portuguesa' && txContains(txt, alvo) ||
-             q.grupo === 'rac_logico' && txContains(txt, 'lógica') ||
-             q.grupo === 'informatica' && txContains(txt, 'informática');
-    });
-    if (previstas.length > 12) previstas = previstas.slice(0, 12);
-  }
+  const previstas = questoesDoDia(diaAlvo, 12);
   const html = `
     <div class="foco">
       <div class="foco-titulo">🎯 Foco de hoje</div>
