@@ -78,10 +78,12 @@ button { font-family: inherit; }
 .error { color: var(--red); font-size: 13px; margin: 10px 0 0; min-height: 18px; }
 
 /* ---------------- App layout ---------------- */
+:root { --topbar-h: 60px; }
 .topbar {
   position: sticky; top: 0; z-index: 20;
   display: flex; align-items: center; justify-content: space-between;
-  padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px;
+  min-height: var(--topbar-h);
+  padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 8px;
   background: linear-gradient(135deg, #0f172a, #1e3a5f);
   color: #fff; box-shadow: var(--shadow);
 }
@@ -96,7 +98,7 @@ button { font-family: inherit; }
 .btn-logout:hover { background: rgba(255,255,255,.25); }
 
 .tabs {
-  position: sticky; top: 0; z-index: 10;
+  position: sticky; top: var(--topbar-h); z-index: 10;
   display: flex; background: #fff; border-bottom: 1px solid var(--line);
 }
 .tab {
@@ -327,6 +329,18 @@ main { padding: 14px 14px calc(24px + env(safe-area-inset-bottom, 0px)); }
 .sim-detalhe { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
 .sim-verdict { font-size: 14px; color: var(--ink); margin: 8px 0 14px; }
 .sim-resultado .btn-primario, .sim-resultado .btn-sec { width: 100%; margin-bottom: 8px; }
+.sim-revisao { text-align: left; margin-top: 12px; }
+.sim-revisao h3 { font-size: 14px; margin: 0 0 10px; }
+.rev-item { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; background: #fff; }
+.rev-item.rev-certo { border-color: #bbf7d0; background: #f0fdf4; }
+.rev-item.rev-errado { border-color: #fecaca; background: #fef2f2; }
+.rev-item.rev-branco { border-style: dashed; }
+.rev-head { display: flex; gap: 8px; font-weight: 800; font-size: 13px; margin-bottom: 3px; }
+.rev-status.rev-certo, .rev-item.rev-certo .rev-n { color: #15803d; }
+.rev-errado .rev-n { color: var(--red); }
+.rev-texto { font-size: 13px; line-height: 1.4; margin-bottom: 4px; }
+.rev-sua { font-size: 12px; color: var(--ink-soft); }
+.rev-gab { font-size: 12px; color: var(--ink); margin-top: 2px; }
 
 /* ---------------- Análise / fraquezas / erros ---------------- */
 #painel-fraquezas, #painel-erros { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-top: 14px; box-shadow: var(--shadow); }
@@ -378,3 +392,13 @@ main { padding: 14px 14px calc(24px + env(safe-area-inset-bottom, 0px)); }
 .pend-pct { font-size: 12px; font-weight: 800; color: var(--accent); white-space: nowrap; }
 .pend-entrega { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; line-height: 1.35; }
 .pend .btn-secondary { width: 100%; margin-top: 0; }
+
+/* ---------------- Toast ---------------- */
+.toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+  background: #0f172a; color: #fff; font-size: 13px; font-weight: 600;
+  padding: 12px 18px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.3);
+  opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+  z-index: 100; max-width: min(92vw, 460px); text-align: center; line-height: 1.4;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

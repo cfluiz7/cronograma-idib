@@ -265,6 +265,21 @@ function setConteudo(id, html) {
   $(id).innerHTML = html;
 }
 
+let _toastTimer = null;
+function mostrarToast(msg, ms = 3200) {
+  let el = $('toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'toast';
+    el.className = 'toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), ms);
+}
+
 function corFase(fid) {
   return (FASES[fid] && FASES[fid].cor) || '#64748b';
 }
@@ -316,7 +331,6 @@ function renderHoje() {
   let status;
   if (concluido) status = 'Dia concluído!';
   else if (hoje) status = 'Dia de hoje';
-  else if (diaHojeAlvo()) status = `Próximo dia do cronograma (dia ${diaAtual()})`;
   else status = `Dia atual do cronograma (você está no dia ${diaAtual()})`;
 
   const restantes = Math.max(0, data.total_dias - diaAtual());
@@ -612,7 +626,7 @@ function bindEvents() {
       hide('questoes-sessao'); show('questoes-home');
       renderQuestoesHome();
       renderAnalise(); renderHojeFoco(); renderHojePendencias();
-      alert(`Sessão concluída: ${totais.certas} certas · ${totais.erradas} erradas. Acesse o caderno de erros na aba Análise.` + (eraPendente ? ' Marque o dia como concluído na aba Cronograma.' : ''));
+      mostrarToast(`Sessão concluída: ${totais.certas} certas · ${totais.erradas} erradas.` + (eraPendente ? ' Marque o dia como concluído na aba Cronograma.' : ''));
       return;
     }
     // Seleção de alternativa (simulado)
@@ -703,7 +717,7 @@ function bindEvents() {
     if (e.target.closest('#btn-treinar-erros')) {
       const erros = QUESTOES_ATIVAS.filter(q => {
         const r = registro(q.id);
-        return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
+        return r && r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
       }).slice(0, 25);
       if (erros.length) {
         filtroQuestoes.estudo = 'erros';
@@ -757,20 +771,15 @@ const gruposRotulo = {
   rac_logico: 'Raciocínio Lógico',
   informatica: 'Informática / Específicos'
 };
-const qByGrupo = () => {
-  const out = {};
-  QUESTOES_ATIVAS.forEach(q => {
-    out[q.grupo] = out[q.grupo] || [];
-    out[q.grupo].push(q);
-  });
-  return out;
-};
 function registro(qid) {
+  return estudo.historico[qid] || null;
+}
+function criarRegistro(qid) {
   if (!estudo.historico[qid]) estudo.historico[qid] = { acertos: 0, tentativas: 0, updatedAt: 0 };
   return estudo.historico[qid];
 }
 function registrarResp(qid, certa) {
-  const r = registro(qid);
+  const r = criarRegistro(qid);
   r.tentativas++;
   if (certa) { r.acertos++; r.acertoEm = Date.now(); } else { r.erroEm = Date.now(); r.ultimoErro = Date.now(); }
   r.updatedAt = Date.now();
@@ -861,11 +870,11 @@ function ativarSessaoPelaLista() {
   if (filtroQuestoes.estudo === 'erros') {
     lista = lista.filter(q => {
       const r = registro(q.id);
-      return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
+      return r && r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
     });
   }
   if (filtroQuestoes.estudo === 'novas') {
-    lista = lista.filter(q => registro(q.id).tentativas === 0);
+    lista = lista.filter(q => !registro(q.id) || registro(q.id).tentativas === 0);
   }
   if (filtroQuestoes.estudo === 'revisao') {
     const dev = new Set(revisoesDevidas());
@@ -884,8 +893,8 @@ function ativarSessaoPelaLista() {
 function atualizarContagem() {
   let lista = qByQuery(filtroQuestoes.grupo, filtroQuestoes.assunto);
   if (filtroQuestoes.estudo !== 'todas') {
-    if (filtroQuestoes.estudo === 'erros') lista = lista.filter(q => { const r = registro(q.id); return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro); });
-    if (filtroQuestoes.estudo === 'novas') lista = lista.filter(q => registro(q.id).tentativas === 0);
+    if (filtroQuestoes.estudo === 'erros') lista = lista.filter(q => { const r = registro(q.id); return r && r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro); });
+    if (filtroQuestoes.estudo === 'novas') lista = lista.filter(q => !registro(q.id) || registro(q.id).tentativas === 0);
     if (filtroQuestoes.estudo === 'revisao') { const d = new Set(revisoesDevidas()); lista = lista.filter(q => d.has(q.id)); }
   }
   const el = $('q-count');
@@ -916,7 +925,7 @@ function renderQuestaoSessao() {
       <div class="q-alts">${alternativaHtml(q)}</div>
       ${resp !== undefined ? `
         <div class="q-feedback ${resp.certa ? 'certo' : 'errado'}">
-          ${resp.certa ? '✔ Correta!' : `✘ Errada — gabarito ${esc(q.gabarito)}`}
+          ${resp.certa ? '✔ Correta!' : `✘ Errada — gabarito ${esc(q.gabarito)}: ${esc((q.alternativas[q.gabarito] || '').slice(0, 120))}`}
         </div>` : ''}
       <div class="q-nav">
         <button class="btn-sec" id="btn-q-ant" ${sessaoQuestoes.idx === 0 ? 'disabled' : ''}>‹ Anterior</button>
@@ -1041,6 +1050,20 @@ function finalizarSimulado() {
   });
   const total = s.questoes.length;
   const pct = Math.round(certas / total * 100);
+  const itens = s.questoes.map((id, i) => {
+    const q = QUESTOES.find(x => x.id === id);
+    if (!q) return '';
+    const r = respostas[id];
+    const certa = !!r && r === q.gabarito;
+    const status = !r ? 'rev-branco' : certa ? 'rev-certo' : 'rev-errado';
+    const sim = !r ? '—' : certa ? '✔' : '✘';
+    return `<div class="rev-item ${status}">
+      <div class="rev-head"><span class="rev-n">${i + 1}.</span><span class="rev-status">${sim}</span></div>
+      <div class="rev-texto">${esc(q.enunciado.slice(0, 160))}${q.enunciado.length > 160 ? '…' : ''}</div>
+      ${r ? `<div class="rev-sua">Sua resposta: <b>${esc(r)}</b></div>` : '<div class="rev-sua">Em branco</div>'}
+      <div class="rev-gab">Gabarito: <b>${esc(q.gabarito)}</b> — ${esc(q.alternativas[q.gabarito] || '')}</div>
+    </div>`;
+  }).join('');
   const html = `
     <div class="sim-resultado">
       <h2>${esc(s.rotulo)} — resultado</h2>
@@ -1050,6 +1073,10 @@ function finalizarSimulado() {
       <p class="sim-verdict">${obterVeredicto(pct)}</p>
       <button class="btn-primario" id="btn-sim-repetir">↺ Fazer de novo</button>
       <button class="btn-sec" id="btn-sim-voltar">‹ Voltar aos simulados</button>
+      <div class="sim-revisao">
+        <h3>Correção completa</h3>
+        ${itens}
+      </div>
     </div>`;
   setConteudo('simulado-sessao', html);
   if (timerSimulado) { clearInterval(timerSimulado); timerSimulado = null; }
@@ -1069,7 +1096,7 @@ function renderFraquezas() {
   const dados = {};
   QUESTOES_ATIVAS.forEach(q => {
     const r = registro(q.id);
-    if (!r.tentativas) return;
+    if (!r || !r.tentativas) return;
     const key = `${gruposRotulo[q.grupo]} › ${q.assunto_rotulo || q.assunto || q.grupo}`;
     dados[key] = dados[key] || { certas: 0, tot: 0 };
     dados[key].tot += r.tentativas;
@@ -1094,7 +1121,7 @@ function renderFraquezas() {
 function renderCadernoErros() {
   const erros = QUESTOES_ATIVAS.filter(q => {
     const r = registro(q.id);
-    return r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
+    return r && r.tentativas && (r.ultimoErro !== undefined) && !(r.acertoEm && r.acertoEm > r.ultimoErro);
   });
   const html = `
     <h3>Caderno de erros (${erros.length})</h3>
@@ -1120,24 +1147,48 @@ function gruposSecao(titulo) {
   return out;
 }
 // questões sugeridas para um dia: prioriza as que têm keywords no conteúdo das seções,
-// com fallback para as do(s) grupo(s) do dia (nunca inventa conteúdo).
+// com fallback para as do(s) grupo(s) do dia (nunca inventa conteúdo). Distribui entre
+// os grupos do dia para o quiz cobrir as disciplinas do cronograma.
 function questoesDoDia(d, limite = 10) {
   if (!d) return [];
-  const grupos = new Set();
-  d.secoes.forEach(s => gruposSecao(s.titulo).forEach(g => grupos.add(g)));
+  const gruposDia = new Set();
+  d.secoes.forEach(s => gruposSecao(s.titulo).forEach(g => gruposDia.add(g)));
+  // ordem dos grupos seguindo a ordem das seções do dia
+  const ordemGrupos = [];
+  d.secoes.forEach(s => gruposSecao(s.titulo).forEach(g => {
+    if (!ordemGrupos.includes(g)) ordemGrupos.push(g);
+  }));
   const txt = d.secoes.map(s => (s.conteudo || '') + ' ' + s.titulo).join(' ').toLowerCase();
-  const cand = QUESTOES_ATIVAS.filter(q => grupos.has(q.grupo));
-  if (!cand.length) return [];
-  const scored = cand.map(q => {
+  const pool = QUESTOES_ATIVAS.filter(q => gruposDia.has(q.grupo));
+  if (!pool.length) return [];
+  const porGrupo = {};
+  ordemGrupos.forEach(g => porGrupo[g] = []);
+  pool.forEach(q => {
     let sc = 0;
     (q.keywords || []).forEach(k => { if (txt.includes(String(k).toLowerCase())) sc++; });
     const rot = (q.assunto_rotulo || '').toLowerCase();
     if (rot && txt.includes(rot)) sc += 5;
-    return { q, sc };
-  }).sort((a, b) => b.sc - a.sc);
-  const picks = scored.filter(x => x.sc > 0).map(x => x.q);
-  const resto = cand.filter(q => !picks.includes(q));
-  const qs = picks.concat(resto);
+    porGrupo[q.grupo].push({ q, sc });
+  });
+  ordemGrupos.forEach(g => porGrupo[g].sort((a, b) => b.sc - a.sc));
+  const qs = [];
+  const porVez = Math.ceil(limite / ordemGrupos.length);
+  ordemGrupos.forEach(g => {
+    const eleg = porGrupo[g].filter(x => x.sc > 0);
+    for (const x of eleg) {
+      if (qs.length >= limite) break;
+      qs.push(x.q);
+    }
+  });
+  // se ainda falta, completa com as demais do pool (mantendo ordem dos grupos)
+  let gi = 0;
+  while (qs.length < limite && qs.length < pool.length) {
+    const g = ordemGrupos[gi % ordemGrupos.length];
+    gi++;
+    const item = porGrupo[g].find(x => !qs.includes(x.q));
+    if (item) qs.push(item.q);
+    else if (ordemGrupos.every(gr => porGrupo[gr].every(x => qs.includes(x.q)))) break;
+  }
   return qs.slice(0, limite);
 }
 function diasPendentes() {
@@ -1246,10 +1297,18 @@ function renderAll() {
 /* ---------------- Init ---------------- */
 // hook para testes/inspeção (apenas em localhost)
 if (['localhost', '127.0.0.1'].includes(location.hostname)) {
-  window.__APP__ = { get QUESTOES() { return QUESTOES; }, get estudo() { return estudo; }, get progresso() { return progresso; }, get sessaoQuestoes() { return sessaoQuestoes; }, get sessaoSimulado() { return sessaoSimulado; }, mergeProgresso, mergeHistorico };
+  window.__APP__ = { get QUESTOES() { return QUESTOES; }, get DIAS() { return DIAS; }, get estudo() { return estudo; }, get progresso() { return progresso; }, get sessaoQuestoes() { return sessaoQuestoes; }, get sessaoSimulado() { return sessaoSimulado; }, diaAtual, questoesDoDia, mergeProgresso, mergeHistorico };
 }
 
 async function init() {
+  // mantém as abas coladas logo abaixo do topbar ao rolar
+  const syncTopbarH = () => {
+    const tb = document.querySelector('.topbar');
+    if (tb) document.documentElement.style.setProperty('--topbar-h', tb.offsetHeight + 'px');
+  };
+  syncTopbarH();
+  window.addEventListener('resize', syncTopbarH);
+
   loadLocal();
   bindEvents();
   showSplash();
@@ -1269,14 +1328,18 @@ async function init() {
   const fireOk = initFirebase();
   if (fireOk) {
     // Aguarda o estado de auth (não há timeout arbitrário). Enquanto isso, splash.
+    let authPendente = true;
     auth.onAuthStateChanged(async u => {
+      if (!authPendente) return;
       if (u) {
+        authPendente = false;
         user = u;
         await carregarProgressoRemoto();
         iniciarEscuta();
         showApp();
         renderAll();
       } else {
+        authPendente = false;
         user = null;
         progresso = {};
         showLogin();
@@ -1285,6 +1348,23 @@ async function init() {
       console.error('Erro no onAuthStateChanged:', err);
       showLogin();
     });
+    // Fallback offline: se o Firebase não responder e não houver rede, entra em
+    // modo local para o PWA continuar funcionando (senão o splash fica eterno).
+    setTimeout(() => {
+      if (!authPendente) return;
+      if (navigator.onLine) return;
+      authPendente = false;
+      localOnly = true;
+      user = null;
+      const saved = localStorage.getItem('cronograma_usuario');
+      if (saved) {
+        user = { displayName: saved, fake: true };
+        showApp();
+        renderAll();
+      } else {
+        showLogin();
+      }
+    }, 5000);
   } else {
     // Modo local: usuário clica em "Entrar com Google" e entra sem conta
     localOnly = true;

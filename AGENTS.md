@@ -56,10 +56,16 @@ ou usar os testes Playwright existentes:
 - `data/*.json` — dados. Sempre reexecutar `scripts/gen_questoes_digitais.py` se o banco
   fonte mudar.
 
-## Estado atual (22/09/2026)
+## Estado atual (24/09/2026)
 
-- P0/P1/P2 P2 concluídos e testados (login, SW, banco de questões, simulados, análise,
-  merge, pomodoro, biblioteca).
-- Pendente: docs de testes extras de sessão, autorizar domínio
-  `cronograma-idib.vercel.app` no console Firebase (ação do usuário — ver
-  `CONFIGURACAO.md` Passo 4.5).
+- Aba **Hoje** mostra quizzes dos dias anteriores pendentes (`#hoje-pendencias`) com
+  revisão de erros por dia; `questoesDoDia` distribui as 10 questões entre os grupos
+  das seções do dia.
+- Batch de melhorias ("deixe o site perfeito"): `registro()` não polui mais o histórico
+  (usa `criarRegistro` para escrita); abas sticky coladas ao topbar variável
+  (`--topbar-h` medido em runtime); fallback offline de 5s para o PWA não ficar no
+  splash; `alert()` do fim de sessão virou `mostrarToast()`; feedback de erro mostra o
+  texto da alternativa correta; resultado do simulado ganhou correção completa por
+  questão (certa/errada/em branco + gabarito). SW em `cronograma-idib-v5`.
+- Pendente: autorizar domínio `cronograma-idib.vercel.app` no console Firebase
+  (ação do usuário — ver `CONFIGURACAO.md` Passo 4.5).

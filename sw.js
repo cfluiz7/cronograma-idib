@@ -1,7 +1,7 @@
 /* Service Worker — cache-first com atualização em segundo plano (stale-while-revalidate)
    e fallback offline para o app shell. A versão do cache é derivada de um hash curto
    embutido no próprio arquivo a cada deploy. */
-const CACHE = 'cronograma-idib-v4';
+const CACHE = 'cronograma-idib-v5';
 const CORE = [
   './',
   './index.html',
